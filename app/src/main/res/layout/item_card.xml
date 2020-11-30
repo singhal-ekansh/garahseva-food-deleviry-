@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="1dp"
+    android:elevation="10dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="150dp">
+
+        <TextView
+            android:id="@+id/discountPercent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/oval_bg"
+            android:elevation="5dp"
+            android:gravity="center"
+            android:padding="8dp"
+            android:text="1% \n off"
+            android:layout_margin="3dp"
+            android:textColor="#fff"
+            android:textSize="13sp" />
+
+        <ImageView
+            android:id="@+id/itemImage"
+            android:layout_width="110dp"
+            android:layout_height="110dp"
+            android:layout_centerVertical="true"
+            android:background="#f8f8ff"
+            android:layout_margin="10dp"
+            android:src="@drawable/colgate250" />
+
+        <TextView
+            android:id="@+id/itemName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_toEndOf="@+id/itemImage"
+            android:text="Ariel Matic Front Load Detergent Washing Powder 1Kg"
+            android:textColor="#000"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/originalPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/itemPrice"
+            android:layout_marginStart="15dp"
+            android:layout_marginBottom="10dp"
+            android:layout_toEndOf="@+id/itemImage"
+            android:text="MRP: Rs 110"
+            android:textSize="18sp"/>
+
+        <TextView
+            android:id="@+id/itemPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="15dp"
+            android:layout_marginBottom="15dp"
+            android:layout_toEndOf="@+id/itemImage"
+            android:text="Rs 100"
+            android:textColor="#000"
+            android:textSize="19sp" />
+
+        <Button
+            android:id="@+id/addButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="15dp"
+            android:background="@drawable/round_btn"
+            android:text="ADD"
+            android:visibility="gone"
+            android:textColor="#fff"
+            android:textSize="18sp" />
+
+        <LinearLayout
+            android:id="@+id/counterLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="20dp"
+            android:visibility="gone">
+
+            <Button
+                android:id="@+id/decrease"
+                android:layout_width="33dp"
+                android:layout_height="33dp"
+
+                android:background="@drawable/round_btn"
+                android:text="-"
+                android:textSize="22sp" />
+
+            <TextView
+                android:id="@+id/itemCount"
+                android:layout_width="40dp"
+                android:layout_height="33dp"
+                android:gravity="center"
+                android:text="1"
+                android:textColor="#000"
+                android:textSize="20sp" />
+
+            <Button
+                android:id="@+id/increase"
+                android:layout_width="33dp"
+                android:layout_height="33dp"
+
+                android:background="@drawable/round_btn"
+                android:text="+"
+                android:textSize="22sp" />
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+
+</androidx.cardview.widget.CardView>

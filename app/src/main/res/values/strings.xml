@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">grocery app</string>
+
+    <string-array name="postal_codes">
+
+        <item>248198 (Vikasnagar)</item>
+        <item>248125 (Dakpatthar)</item>
+        <item>248142 (herbertpur)</item>
+    </string-array>
+
+</resources>

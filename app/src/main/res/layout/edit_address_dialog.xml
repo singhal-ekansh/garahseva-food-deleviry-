@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
     android:orientation="vertical"
+    android:background="@drawable/white_bg"
     android:padding="10dp">
 
     <LinearLayout
@@ -15,6 +17,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Postal code:"
+            android:fontFamily="@font/raleway_medium"
             android:textSize="16sp" />
 
         <TextView
@@ -23,6 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:padding="5dp"
+            android:fontFamily="@font/roboto_black"
             android:text="248198"
             android:textColor="#000"
             android:textSize="16sp" />
@@ -37,6 +41,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="3dp"
         android:hint="Name*"
+        android:fontFamily="@font/raleway_medium"
         android:inputType="textPersonName" />
 
     <EditText
@@ -44,6 +49,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="3dp"
+        android:fontFamily="@font/raleway_medium"
         android:hint="contact number*"
         android:inputType="number" />
 
@@ -54,6 +60,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="3dp"
         android:hint="address*"
+        android:fontFamily="@font/raleway_medium"
         android:inputType="textMultiLine" />
 
     <EditText
@@ -62,6 +69,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="3dp"
         android:hint="landmark*"
+        android:fontFamily="@font/raleway_medium"
         android:inputType="text" />
 
     <TextView
@@ -69,6 +77,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="4dp"
         android:padding="2dp"
+        android:fontFamily="@font/raleway_medium"
         android:text="*postal code can be changed from home screen only" />
 
     <Button
@@ -77,6 +86,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="8dp"
+        android:textColor="#fff"
         android:background="@drawable/round_btn"
         android:text="Save Address"
         android:textSize="20sp" />

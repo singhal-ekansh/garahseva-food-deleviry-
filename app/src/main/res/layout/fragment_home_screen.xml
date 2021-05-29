@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#dedede"
-    tools:context=".home_screen">
+    tools:context=".GroceryFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -16,8 +16,8 @@
             android:id="@+id/hasCurrentOrderOrNot"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:background="@drawable/white_bg"
+            android:layout_margin="3dp"
+            android:background="#fff"
             android:elevation="5dp">
 
             <TextView
@@ -26,6 +26,7 @@
                 android:layout_margin="4dp"
                 android:gravity="center"
                 android:padding="5dp"
+                android:fontFamily="@font/raleway_medium"
                 android:text="Current Order Details"
                 android:textColor="#000"
                 android:textSize="20sp" />
@@ -74,8 +75,9 @@
                 android:layout_margin="10dp"
                 android:background="@drawable/heading_bg"
                 android:elevation="5dp"
-                android:fontFamily="@font/acme"
+                android:fontFamily="@font/raleway_medium"
                 android:gravity="center"
+                android:textColor="#000"
                 android:padding="5dp"
                 android:text="Shop By Category"
                 android:textSize="25sp" />
@@ -99,13 +101,15 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:elevation="5dp"
                 android:layout_margin="3dp"
-                android:fontFamily="sans-serif-black"
-                android:textColor="#000"
+                android:elevation="5dp"
+                android:fontFamily="@font/raleway_medium"
                 android:padding="5dp"
                 android:text="Deals Of The Week"
-                android:textSize="20sp" />
+                android:textColor="#000"
+                android:textSize="20sp"
+
+                android:textStyle="bold" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/homeOfferWeekRecycler"
@@ -113,7 +117,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="10dp"
-                android:background="#ddd09a"
                 android:elevation="3dp"
                 android:focusable="false"
                 android:padding="5dp" />

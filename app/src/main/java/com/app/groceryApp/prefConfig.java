@@ -154,6 +154,17 @@ public class prefConfig {
         return hasOrNot;
     }
 
+    public static void clearList(Context context) {
+        ArrayList<itemHelperClass> list;
+        list = new ArrayList<>();
+
+        Gson gson = new Gson();
+        String jsonString = gson.toJson(list);
+        SharedPreferences preferences = context.getSharedPreferences("myDetails", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("myCartList", jsonString);
+        editor.apply();
+    }
 
     public static void registerPref(Context context, SharedPreferences.OnSharedPreferenceChangeListener listener) {
         SharedPreferences preferences = context.getSharedPreferences("myDetails", Context.MODE_PRIVATE);

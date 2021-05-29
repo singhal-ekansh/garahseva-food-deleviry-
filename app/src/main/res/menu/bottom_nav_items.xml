@@ -2,9 +2,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/a"
-        android:title="Home"
-        android:icon="@drawable/ic_baseline_home_24"/>
+        android:title="Grocery"
+        android:icon="@drawable/ic_groceries"/>
 
+    <item
+        android:id="@+id/aa"
+        android:title="Food"
+        android:icon="@drawable/ic_baseline_fastfood_24"
+        android:iconTint="#fff"/>
     <item
         android:id="@+id/b"
         android:title="Offers"

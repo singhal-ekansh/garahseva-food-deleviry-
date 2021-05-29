@@ -9,6 +9,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:padding="4dp"
         android:orientation="vertical">
 
         <TextView
@@ -17,7 +18,7 @@
             android:layout_margin="5dp"
             android:padding="5dp"
             android:text="Address"
-            android:fontFamily="@font/archivo_black"
+            android:fontFamily="@font/roboto_black"
             android:textSize="20sp" />
 
         <LinearLayout
@@ -27,13 +28,14 @@
             android:background="@drawable/white_bg"
             android:elevation="5dp"
             android:orientation="vertical"
-            android:padding="5dp">
+            android:padding="8dp">
 
             <TextView
                 android:id="@+id/customerName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
+                android:fontFamily="@font/amethysta"
                 android:text="Ekansh Singhal"
                 android:textColor="#000"
                 android:textSize="16sp" />
@@ -43,6 +45,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
+                android:fontFamily="@font/amethysta"
                 android:text="9368261339"
                 android:textColor="#000"
                 android:textSize="16sp" />
@@ -52,6 +55,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
+                android:fontFamily="@font/amethysta"
                 android:text="Vidhya Peeth Marg Vikasnagar"
                 android:textColor="#000"
                 android:textSize="16sp" />
@@ -61,6 +65,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="3dp"
+                android:fontFamily="@font/amethysta"
                 android:text="Landmark: near garden resort"
                 android:textColor="#000"
                 android:textSize="16sp" />
@@ -70,6 +75,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="3dp"
+                android:fontFamily="@font/amethysta"
                 android:text="Postal code: 248198"
                 android:textColor="#000"
                 android:textSize="16sp" />
@@ -84,7 +90,7 @@
             android:layout_marginTop="10dp"
             android:padding="5dp"
             android:text="Items "
-            android:fontFamily="@font/archivo_black"
+            android:fontFamily="@font/roboto_black"
             android:textSize="20sp" />
 
         <androidx.recyclerview.widget.RecyclerView
@@ -100,7 +106,7 @@
             android:layout_margin="5dp"
             android:padding="5dp"
             android:text="Payment Details"
-            android:fontFamily="@font/archivo_black"
+            android:fontFamily="@font/roboto_black"
             android:textSize="20sp" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -117,6 +123,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:text="Order ID :"
+                android:fontFamily="@font/amethysta"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -129,6 +136,7 @@
                 android:layout_marginTop="15dp"
                 android:layout_marginStart="5dp"
                 android:text="Payment mode :"
+                android:fontFamily="@font/amethysta"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/l0" />
@@ -140,6 +148,7 @@
                 android:layout_marginStart="5dp"
                 android:layout_marginTop="15dp"
                 android:text="Cart amount :"
+                android:fontFamily="@font/amethysta"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/l1" />
@@ -151,6 +160,7 @@
                 android:layout_marginStart="5dp"
                 android:layout_marginTop="15dp"
                 android:text="Delivery fee :"
+                android:fontFamily="@font/amethysta"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/l2" />
@@ -162,6 +172,7 @@
                 android:layout_marginStart="5dp"
                 android:layout_marginTop="15dp"
                 android:text="Wallet Cash :"
+                android:fontFamily="@font/amethysta"
                 android:visibility="gone"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -174,6 +185,7 @@
                 android:layout_marginStart="5dp"
                 android:layout_marginTop="15dp"
                 android:text="Total Amount :"
+                android:fontFamily="@font/amethysta"
                 android:textColor="#000"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -185,6 +197,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:text="10000"
+                android:fontFamily="@font/roboto_medium"
                 android:textColor="#000"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -196,6 +209,7 @@
                 android:layout_marginTop="15dp"
                 android:layout_marginEnd="5dp"
                 android:text="cash on delivery"
+                android:fontFamily="@font/roboto_medium"
                 android:textColor="#000"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -208,6 +222,7 @@
                 android:layout_marginTop="15dp"
                 android:layout_marginEnd="5dp"
                 android:text="Rs 500"
+                android:fontFamily="@font/roboto_medium"
                 android:textColor="#000"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -220,6 +235,7 @@
                 android:layout_marginTop="15dp"
                 android:layout_marginEnd="5dp"
                 android:text="Rs 50"
+                android:fontFamily="@font/roboto_medium"
                 android:textColor="#000"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -232,6 +248,7 @@
                 android:layout_marginTop="15dp"
                 android:layout_marginEnd="5dp"
                 android:text="- Rs 50"
+                android:fontFamily="@font/roboto_medium"
                 android:visibility="gone"
                 android:textColor="#000"
                 android:textSize="16sp"
@@ -245,6 +262,7 @@
                 android:layout_marginTop="15dp"
                 android:layout_marginEnd="5dp"
                 android:text="Rs 550"
+                android:fontFamily="@font/roboto_black"
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="17sp"
                 app:layout_constraintEnd_toEndOf="parent"

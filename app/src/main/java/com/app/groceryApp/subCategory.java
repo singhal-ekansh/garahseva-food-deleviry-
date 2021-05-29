@@ -29,13 +29,13 @@ public class subCategory extends AppCompatActivity implements subCategoryAdapter
     RecyclerView categoryGridRecycler, bestOfferRecycler;
     RecyclerView.Adapter adapter, bestOfferAdapter;
     ArrayList<categoryHelperClass> categoryList;
-    ArrayList<itemHelperClass> BestItemList, myCartList;
+    ArrayList<itemHelperClass> BestItemList, myCartList, allCategoryItems;
     Intent intent;
     Toolbar toolbar;
-    String category, itemsJson, imageUrl, place;
+    String category, itemsJson, place;
     FirebaseFirestore firebaseFirestore;
-    ProgressBar pBar, imageLoadingBar;
-    ImageView bannerImageView;
+    ProgressBar pBar;
+
     TextView bestOfferTextView;
 
     @Override
@@ -59,38 +59,21 @@ public class subCategory extends AppCompatActivity implements subCategoryAdapter
         firebaseFirestore = FirebaseFirestore.getInstance();
         bestOfferRecycler = findViewById(R.id.subCategoryBestOfferRecycler);
         categoryGridRecycler = findViewById(R.id.grocery_category_recycler);
-        bannerImageView = findViewById(R.id.subImageView);
+
         bestOfferTextView = findViewById(R.id.bestOffersText);
-        imageLoadingBar = findViewById(R.id.imageLoaderBar);
-        imageLoadingBar.setVisibility(View.GONE);
+
         bestOfferTextView.setVisibility(View.GONE);
-        bannerImageView.setVisibility(View.GONE);
+
         setMainRecycler();
 
-        firebaseFirestore.collection("admin").document(place).collection("products").document(category).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
 
-                    imageUrl = document.getString("banner image");
-
-                    if (imageUrl != null) {
-                        imageLoadingBar.setVisibility(View.VISIBLE);
-                        bannerImageView.setVisibility(View.VISIBLE);
-                        Glide.with(subCategory.this).load(imageUrl).into(bannerImageView);
-                    }
-                    imageLoadingBar.setVisibility(View.GONE);
-
-                }
-            }
-        });
     }
+
 
     public void setMainRecycler() {
         categoryGridRecycler.setHasFixedSize(true);
 
-        categoryGridRecycler.setLayoutManager(new GridLayoutManager(getApplicationContext(), 2, GridLayoutManager.VERTICAL, false));
+        categoryGridRecycler.setLayoutManager(new GridLayoutManager(getApplicationContext(), 3, GridLayoutManager.VERTICAL, false));
 
         categoryList = new ArrayList<>();
         if (category.equals("Dry & Baking Goods")) {
@@ -124,7 +107,7 @@ public class subCategory extends AppCompatActivity implements subCategoryAdapter
             categoryList.add(new categoryHelperClass(R.drawable.fragnance_deos, "Fragrances & deos"));
         } else if (category.equals("Snacks")) {
             categoryList.add(new categoryHelperClass(R.drawable.ic_baseline_shopping_cart_24, "Biscuits"));
-            categoryList.add(new categoryHelperClass(R.drawable.ic_baseline_shopping_cart_24, "Chips|Namkeens"));
+            categoryList.add(new categoryHelperClass(R.drawable.ic_baseline_shopping_cart_24, "Chips |Namkeens"));
             categoryList.add(new categoryHelperClass(R.drawable.ic_baseline_shopping_cart_24, "Noodles|Pasta"));
 
         }
@@ -139,30 +122,36 @@ public class subCategory extends AppCompatActivity implements subCategoryAdapter
         bestOfferRecycler.setHasFixedSize(true);
         bestOfferRecycler.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL, false));
 
-        int i = 0;
-        for (itemHelperClass helperClass1 : myCartList) {
+        if (BestItemList.size() == 0) {
+            bestOfferRecycler.setVisibility(View.GONE);
+            pBar.setVisibility(View.GONE);
+            bestOfferTextView.setVisibility(View.GONE);
+        } else {
+            int i = 0;
+            for (itemHelperClass helperClass1 : myCartList) {
 
-            i = 0;
-            for (itemHelperClass helperClass2 : BestItemList) {
-                if (helperClass1.getItemName().equals(helperClass2.getItemName())) {
-                    BestItemList.get(i).itemQuantity = helperClass1.getItemQuantity();
-                    break;
+                i = 0;
+                for (itemHelperClass helperClass2 : BestItemList) {
+                    if (helperClass1.getItemName().equals(helperClass2.getItemName())) {
+                        BestItemList.get(i).itemQuantity = helperClass1.getItemQuantity();
+                        break;
+                    }
+                    i++;
                 }
-                i++;
+
             }
 
+            bestOfferAdapter = new HorizontalCardItemAdapter(BestItemList, this, getApplicationContext());
+            bestOfferRecycler.setAdapter(bestOfferAdapter);
+            bestOfferRecycler.setVisibility(View.VISIBLE);
+            pBar.setVisibility(View.GONE);
+            bestOfferTextView.setVisibility(View.VISIBLE);
+
         }
-
-        bestOfferAdapter = new HorizontalCardItemAdapter(BestItemList, this, getApplicationContext());
-        bestOfferRecycler.setAdapter(bestOfferAdapter);
-        bestOfferRecycler.setVisibility(View.VISIBLE);
-        pBar.setVisibility(View.GONE);
-        bestOfferTextView.setVisibility(View.VISIBLE);
-
     }
 
 
-    private Toolbar.OnMenuItemClickListener onMenuItemClickListener = new Toolbar.OnMenuItemClickListener() {
+    private final Toolbar.OnMenuItemClickListener onMenuItemClickListener = new Toolbar.OnMenuItemClickListener() {
         @Override
         public boolean onMenuItemClick(MenuItem item) {
             if (item.getItemId() == R.id.searchBtn2) {
@@ -240,17 +229,23 @@ public class subCategory extends AppCompatActivity implements subCategoryAdapter
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
-                    itemsJson = document.getString("best offers");
+                    itemsJson = document.getString("all product");
                     if (itemsJson != null) {
-                        BestItemList = prefConfig.getProducts(itemsJson);
-                        if (BestItemList == null)
-                            BestItemList = new ArrayList<>();
+                        allCategoryItems = prefConfig.getProducts(itemsJson);
+                        if (allCategoryItems == null)
+                            allCategoryItems = new ArrayList<>();
+
+                        BestItemList = new ArrayList<>();
+                        for (itemHelperClass helperClass : allCategoryItems) {
+                            if (helperClass.getDiscount() >= 5) {
+                                BestItemList.add(helperClass);
+                            }
+                        }
                         setBestOffers();
-                    } else {
-                        bestOfferRecycler.setVisibility(View.GONE);
+                    }else{
                         pBar.setVisibility(View.GONE);
-                        bestOfferTextView.setVisibility(View.GONE);
                     }
+
 
                 }
             }

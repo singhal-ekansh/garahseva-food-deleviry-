@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">grocery app</string>
+    <string name="app_name">Singhal Store</string>
 
     <string-array name="postal_codes">
 
@@ -7,5 +7,7 @@
         <item>248125 (Dakpatthar)</item>
         <item>248142 (herbertpur)</item>
     </string-array>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

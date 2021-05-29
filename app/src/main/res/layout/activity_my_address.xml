@@ -16,7 +16,7 @@
         android:layout_margin="10dp"
         android:background="@drawable/white_bg"
         android:elevation="5dp"
-        android:padding="5dp"
+        android:padding="3dp"
         app:layout_constraintBottom_toTopOf="@id/constrain2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -27,7 +27,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:fontFamily="sans-serif-black"
+            android:fontFamily="@font/raleway_medium"
+            android:textStyle="bold"
             android:text="Delivery Address"
             android:textColor="#000"
             android:textSize="20sp"
@@ -40,8 +41,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
             android:layout_marginTop="10dp"
+            android:fontFamily="@font/raleway_medium"
             android:text="Name:"
-            android:textSize="19sp"
+            android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="@+id/editTextTextPersonName"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/dAddressText" />
@@ -51,8 +53,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="8dp"
             android:ems="10"
+            android:fontFamily="@font/raleway_medium"
             android:inputType="textPersonName"
             app:layout_constraintStart_toEndOf="@id/t1"
             app:layout_constraintTop_toBottomOf="@+id/dAddressText" />
@@ -62,9 +65,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
-            android:layout_marginTop="6dp"
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/raleway_medium"
             android:text="Contact No:"
-            android:textSize="19sp"
+            android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="@+id/editTextPhone"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName" />
@@ -74,8 +78,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:layout_marginTop="6dp"
+            android:layout_marginTop="5dp"
             android:ems="10"
+            android:fontFamily="@font/amethysta"
             android:inputType="phone"
             app:layout_constraintStart_toEndOf="@id/t2"
             app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName" />
@@ -85,15 +90,16 @@
             android:id="@+id/postalCodeView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="248198 (Vikasnagar)"
-            android:textColor="#000"
             android:layout_marginStart="10dp"
             android:layout_marginTop="12dp"
+            android:fontFamily="@font/amethysta"
             android:padding="5dp"
-            android:textSize="18sp"
+            android:text="248198 (Vikasnagar)"
+            android:textColor="#000"
+            android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="@+id/t3"
             app:layout_constraintStart_toEndOf="@+id/t3"
-            app:layout_constraintTop_toBottomOf="@+id/editTextPhone"/>
+            app:layout_constraintTop_toBottomOf="@+id/editTextPhone" />
 
 
         <TextView
@@ -102,8 +108,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
             android:layout_marginTop="12dp"
+            android:fontFamily="@font/raleway_medium"
             android:text="Postal Code:"
-            android:textSize="19sp"
+            android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="@+id/postalCodeView"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editTextPhone" />
@@ -114,8 +121,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
             android:layout_marginTop="8dp"
+            android:fontFamily="@font/raleway_medium"
             android:text="Address:"
-            android:textSize="19sp"
+            android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="@+id/editTextAddress"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/postalCodeView" />
@@ -127,6 +135,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginTop="8dp"
             android:ems="50"
+            android:fontFamily="@font/raleway_medium"
             android:gravity="start|top"
             android:inputType="textMultiLine"
             app:layout_constraintEnd_toEndOf="parent"
@@ -138,9 +147,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
-            android:layout_marginTop="6dp"
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/raleway_medium"
             android:text="Landmark:"
-            android:textSize="19sp"
+            android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="@+id/editTextLandmark"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editTextAddress" />
@@ -150,12 +160,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:layout_marginTop="6dp"
+            android:layout_marginTop="5dp"
             android:ems="10"
+            android:fontFamily="@font/raleway_medium"
             android:inputType="textPostalAddress"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/t5"
             app:layout_constraintTop_toBottomOf="@+id/editTextAddress" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:fontFamily="@font/raleway_medium"
+            android:padding="2dp"
+            android:text="*postal code can be changed from home screen only"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editTextLandmark" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -167,7 +187,6 @@
         android:layout_margin="10dp"
         android:background="@drawable/white_bg"
         android:elevation="5dp"
-        android:padding="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/constrain1">
@@ -177,8 +196,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:fontFamily="sans-serif-black"
-            android:text="Delivery Options"
+            android:fontFamily="@font/raleway_medium"
+            android:textStyle="bold"
+            android:text="Delivery Slot"
             android:textColor="#000"
             android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
@@ -188,7 +208,7 @@
             android:id="@+id/optionGroup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+            android:layout_margin="8dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/dOptionText">
 
@@ -199,9 +219,9 @@
                 android:layout_height="match_parent"
                 android:layout_margin="5dp"
                 android:checked="true"
-                android:fontFamily="@font/acme"
-                android:text="  1 Hour Delivery    (50 Rs charge)"
-                android:textSize="18sp" />
+                android:fontFamily="@font/amethysta"
+                android:gravity="start"
+                android:textSize="16sp" />
 
             <RadioButton
                 android:id="@+id/onDay"
@@ -209,9 +229,9 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:checked="false"
-                android:fontFamily="@font/acme"
-                android:text="  On Day Delivery    (20 Rs charge)"
-                android:textSize="18sp" />
+                android:fontFamily="@font/amethysta"
+                android:gravity="start"
+                android:textSize="16sp" />
 
             <RadioButton
                 android:id="@+id/nextDay"
@@ -219,9 +239,9 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:checked="false"
-                android:fontFamily="@font/acme"
-                android:text="  Next Day Delivery   (free delivery)"
-                android:textSize="18sp" />
+                android:fontFamily="@font/amethysta"
+                android:gravity="start"
+                android:textSize="16sp" />
 
         </RadioGroup>
 
@@ -231,14 +251,16 @@
         android:id="@+id/addAddressBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="15dp"
+        android:layout_margin="18dp"
         android:background="@drawable/round_btn"
+        android:fontFamily="@font/roboto_black"
         android:text="Proceed To Checkout"
         android:textAllCaps="false"
         android:textColor="#fff"
-        android:textSize="18sp"
+        android:textSize="22sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
 

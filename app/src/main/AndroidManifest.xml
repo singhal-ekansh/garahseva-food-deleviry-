@@ -12,7 +12,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".currentOrderInfo"
+        <activity android:name=".RestaurantDetailActivity"></activity>
+        <activity
+            android:name=".currentOrderInfo"
             android:theme="@style/AppTheme2" />
         <activity
             android:name=".myOrders"
@@ -25,22 +27,29 @@
             android:theme="@style/AppTheme2" />
         <activity
             android:name=".myAccount"
-            android:theme="@style/AppTheme2" />
+            android:theme="@style/AppThemeMaterial" />
         <activity android:name=".searchBar" />
         <activity android:name=".itemList" />
         <activity android:name=".subCategory" />
-        <activity android:name=".MainActivity">
+        <activity
+            android:name=".MainActivity"
+            android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <service android:name=".MyFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>

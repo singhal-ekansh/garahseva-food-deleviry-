@@ -24,6 +24,7 @@
             android:layout_alignBottom="@+id/dialogProgressBar"
             android:layout_alignParentTop="true"
             android:layout_marginStart="30dp"
+            android:fontFamily="@font/amethysta"
             android:layout_toEndOf="@id/dialogProgressBar"
             android:gravity="center"
             android:text="Loading...."

@@ -1,20 +1,20 @@
 package com.app.groceryApp;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.ui.auth.AuthUI;
@@ -38,12 +38,14 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     Fragment selectedFragment;
     Toolbar toolbar;
     ArrayList<itemHelperClass> myCartList;
-    int RC_SIGN_IN = 500;
+    int RC_SIGN_IN = 500, x = 0;
     LinearLayout choseLocationLayout;
-    Spinner spinner;
+    TextView locationText;
     boolean doubleBackToExitPressedOnce = false;
-    String place;
-
+    String place, placeSelected;
+    AlertDialog alertDialog;
+    Button cancel;
+    BottomSheetLocation bottomSheetLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,23 +55,14 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         toolbar = findViewById(R.id.mainToolbar);
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
 
+        locationText = findViewById(R.id.deliverToLocation);
         choseLocationLayout = findViewById(R.id.locationLayout);
-        spinner = findViewById(R.id.deliverToSpinner);
+
         bottomNavigationView.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
-
+        bottomSheetLocation = new BottomSheetLocation();
         place = prefConfig.getDeliveryLocation(getApplicationContext());
+        locationText.setText(place);
 
-        switch (place) {
-            case "Vikasnagar":
-                spinner.setSelection(0);
-                break;
-            case "Dakpatthar":
-                spinner.setSelection(1);
-                break;
-            case "Herbertpur":
-                spinner.setSelection(2);
-                break;
-        }
 
         //on re selecting navView item fragment should not load again
         bottomNavigationView.setOnNavigationItemReselectedListener(new BottomNavigationView.OnNavigationItemReselectedListener() {
@@ -79,38 +72,21 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
             }
         });
 
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        choseLocationLayout.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                switch (position) {
-                    case 0:
-                        prefConfig.setDeliverLocation(getApplicationContext(), "Vikasnagar");
-                        break;
-                    case 1:
-                        prefConfig.setDeliverLocation(getApplicationContext(), "Dakpatthar");
-                        break;
-                    case 2:
-                        prefConfig.setDeliverLocation(getApplicationContext(), "Herbertpur");
-                        break;
+            public void onClick(View v) {
 
-                }
 
-                getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, new home_screen()).commit();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
+                bottomSheetLocation.show(getSupportFragmentManager(), "tag");
             }
         });
 
-
         toolbar.setOnMenuItemClickListener(onMenuItemClickListener);
-
+        getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, new GroceryFragment()).commit();
 
     }
 
-    private Toolbar.OnMenuItemClickListener onMenuItemClickListener = new Toolbar.OnMenuItemClickListener() {
+    private final Toolbar.OnMenuItemClickListener onMenuItemClickListener = new Toolbar.OnMenuItemClickListener() {
         @Override
         public boolean onMenuItemClick(MenuItem item) {
             if (item.getItemId() == R.id.searchBtn) {
@@ -148,7 +124,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     };
 
 
-    private BottomNavigationView.OnNavigationItemSelectedListener navigationItemSelectedListener =
+    private final BottomNavigationView.OnNavigationItemSelectedListener navigationItemSelectedListener =
             new BottomNavigationView.OnNavigationItemSelectedListener() {
                 @Override
                 public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -158,18 +134,23 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                     switch (item.getItemId()) {
 
                         case R.id.a:
-                            selectedFragment = new home_screen();
+                            selectedFragment = new GroceryFragment();
                             choseLocationLayout.setVisibility(View.VISIBLE);
-                            toolbar.setTitle("Home");
+                            toolbar.setTitle("Grocery");
+                            break;
+                        case R.id.aa:
+                            selectedFragment = new FoodFragment();
+                            choseLocationLayout.setVisibility(View.VISIBLE);
+                            toolbar.setTitle("Food");
                             break;
                         case R.id.b:
                             selectedFragment = new offer_screen();
                             toolbar.setTitle("Offers");
-                            choseLocationLayout.setVisibility(View.GONE);
+                            choseLocationLayout.setVisibility(View.VISIBLE);
                             break;
                         case R.id.c:
                             selectedFragment = new cart_screen();
-                            choseLocationLayout.setVisibility(View.GONE);
+                            choseLocationLayout.setVisibility(View.VISIBLE);
                             toolbar.setTitle("My Cart");
                             break;
                     }
@@ -212,6 +193,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     protected void onResume() {
         super.onResume();
 
+
         myCartList = prefConfig.getList(getApplicationContext());
 
         if (myCartList == null)
@@ -221,6 +203,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
             bottomNavigationView.getOrCreateBadge(R.id.c).setNumber(myCartList.size());
         else
             bottomNavigationView.removeBadge(R.id.c);
+
 
     }
 
@@ -237,9 +220,39 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
             else
                 bottomNavigationView.removeBadge(R.id.c);
 
+        } else if (key.equals("deliveryArea")) {
+            placeSelected = prefConfig.getDeliveryLocation(getApplicationContext());
+            locationText.setText(placeSelected);
+            if (!placeSelected.equals(place)) {
+
+                getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, new GroceryFragment()).commit();
+                prefConfig.clearList(getApplicationContext());
+                place = placeSelected;
+                showAlert();
+            }
+
         }
     }
 
+    private void showAlert() {
+
+        AlertDialog.Builder confirmAlert = new AlertDialog.Builder(this);
+        View view = getLayoutInflater().inflate(R.layout.on_location_change_dialog, null);
+
+
+        cancel = view.findViewById(R.id.continueId);
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog.dismiss();
+            }
+        });
+        confirmAlert.setView(view);
+        alertDialog = confirmAlert.create();
+        alertDialog.setCanceledOnTouchOutside(true);
+        alertDialog.setCancelable(false);
+        alertDialog.show();
+    }
 
     @Override
     protected void onStart() {

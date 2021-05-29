@@ -12,8 +12,9 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Colgate 250gm"
+        android:fontFamily="@font/amethysta"
         android:textColor="#000"
-        android:textSize="17sp"
+        android:textSize="16sp"
         app:layout_constraintEnd_toStartOf="@id/orderItemQty"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -24,7 +25,8 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="20dp"
         android:text="x2"
-        android:textSize="20sp"
+        android:fontFamily="@font/roboto_medium"
+        android:textSize="17sp"
         app:layout_constraintEnd_toStartOf="@id/orderItemPrice"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -33,8 +35,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Rs 45"
+        android:fontFamily="@font/roboto_black"
         android:textColor="#000"
-        android:textSize="20sp"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

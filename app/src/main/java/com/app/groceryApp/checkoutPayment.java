@@ -31,6 +31,8 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.FirebaseMessagingService;
 
@@ -49,13 +51,16 @@ public class checkoutPayment extends AppCompatActivity {
     int type;
     double orderAmount, delCharge, totalAmountToPay;
     RadioGroup payGroup;
-    TextView deliveryAmountView, cartOrderAmountView, totalAmountView, walletTextView, walletCashAmtView;
-    Button placeOrderBtn;
-    EditText deliveryNoteEdit;
+    TextView deliveryAmountView, cartOrderAmountView, totalAmountView, walletTextView, walletCashAmtView, cashbackTextView, cashbackAmountView;
+    Button placeOrderBtn, applyBtn;
+    EditText deliveryNoteEdit, voucherEdit;
     FirebaseFirestore store;
-    int currentOrderNo, allOrdersId, walletCash;
-    String orderDetails, shipAddress, modeOfPayment = "COD", deliveryNote = "", place;
+    int currentOrderNo, allOrdersId, walletCash, cashback;
+    String orderDetails, shipAddress, modeOfPayment = "COD", deliveryNote = "", place, appliedCode = "";
     AlertDialog alertDialog, progressDialog;
+    Map<String, Object> codeDetails;
+    Intent intent;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,11 +73,18 @@ public class checkoutPayment extends AppCompatActivity {
         payGroup = findViewById(R.id.paymentGroup);
         placeOrderBtn = findViewById(R.id.payBtn);
         walletCashAmtView = findViewById(R.id.walletCash);
+        cashbackAmountView = findViewById(R.id.cashback);
         walletTextView = findViewById(R.id.text3);
+        cashbackTextView = findViewById(R.id.text4);
         deliveryNoteEdit = findViewById(R.id.delNote);
+        voucherEdit = findViewById(R.id.promoEdit);
+        applyBtn = findViewById(R.id.addPromoBtn);
+
+
         store = FirebaseFirestore.getInstance();
         place = prefConfig.getDeliveryLocation(getApplicationContext());
 
+        progressDialog();
         ActionBar bar = getSupportActionBar();
         bar.setTitle("Checkout");
         bar.setDisplayHomeAsUpEnabled(true);
@@ -81,17 +93,10 @@ public class checkoutPayment extends AppCompatActivity {
         orderDetails = prefConfig.getOrderJson(getApplicationContext());
         shipAddress = prefConfig.getAddressJson(getApplicationContext());
 
-        Intent intent = getIntent();
+        intent = getIntent();
         type = intent.getIntExtra("type", 0);
+        delCharge = intent.getDoubleExtra("delCharge", 0);
         orderAmount = intent.getDoubleExtra("cartAmount", 0);
-
-
-        if (type == 1)
-            delCharge = 50;
-        else if (type == 2)
-            delCharge = 20;
-        else
-            delCharge = 0;
 
         store.collection("users").document(FirebaseAuth.getInstance().getCurrentUser().getUid()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
@@ -119,6 +124,7 @@ public class checkoutPayment extends AppCompatActivity {
                     cartOrderAmountView.setText("₹ " + orderAmount);
                     totalAmountView.setText("₹ " + (int) totalAmountToPay);
                 }
+                progressDialog.dismiss();
             }
         });
 
@@ -159,27 +165,144 @@ public class checkoutPayment extends AppCompatActivity {
                     }
                 });
 
-
             }
         });
 
+        applyBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                voucherEdit.setError(null);
+                progressDialog();
 
+                String code;
+                code = voucherEdit.getText().toString().trim();
+
+                if (code.length() == 0) {
+                    voucherEdit.setError("enter code");
+                    progressDialog.dismiss();
+                } else {
+                    store.collection("admin").document(place).collection("vouchers").whereEqualTo("code", code)
+                            .get()
+                            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                    if (task.isSuccessful()) {
+                                        int flag = 0;
+                                        for (QueryDocumentSnapshot document : task.getResult()) {
+                                            flag = 1;
+                                            codeDetails = document.getData();
+                                            if (codeDetails.get("status").equals(true)) {
+                                                if ((int) (long) codeDetails.get("minimum amount") <= (int) orderAmount)
+                                                    checkUserOrders();
+                                                else {
+                                                    voucherEdit.setError("valid on minimum cart value " + (int) (long) codeDetails.get("minimum amount"));
+                                                    progressDialog.dismiss();
+                                                }
+                                            } else {
+                                                voucherEdit.setError("promo expired");
+                                                progressDialog.dismiss();
+                                            }
+                                        }
+                                        if (flag == 0) {
+                                            voucherEdit.setError("invalid code");
+                                            progressDialog.dismiss();
+                                        }
+                                    }
+                                }
+                            });
+                }
+
+            }
+        });
+    }
+
+    private void checkUserOrders() {
+        store.collection("users").document(FirebaseAuth.getInstance().getCurrentUser().getUid()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (codeDetails.get("only on first order").equals(true)) {
+                        if ((int) (long) document.get("no of orders") == 0) {
+                            checkUserVouchers();
+                        } else {
+                            voucherEdit.setError("only valid on first order");
+                            progressDialog.dismiss();
+                        }
+                    } else
+                        checkUserVouchers();
+
+                }
+            }
+        });
+    }
+
+    private void checkUserVouchers() {
+        store.collection("users").document(FirebaseAuth.getInstance().getCurrentUser().getUid()).collection("codes used")
+                .whereEqualTo("code", codeDetails.get("code").toString()).get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            int flag = 0;
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                flag = 1;
+                            }
+                            if (flag == 1) {
+                                voucherEdit.setError("already applied");
+                                progressDialog.dismiss();
+                            } else
+                                applyCashback();
+
+                        }
+                    }
+                });
+    }
+
+    private void applyCashback() {
+
+        if (!(boolean) codeDetails.get("free del")) {
+            cashbackTextView.setVisibility(View.VISIBLE);
+            cashbackAmountView.setText("₹ " + (int) (long) codeDetails.get("cashback"));
+            cashbackAmountView.setVisibility(View.VISIBLE);
+            cashback = (int) (long) codeDetails.get("cashback");
+            delCharge = intent.getDoubleExtra("delCharge", 0);
+        } else {
+            cashbackTextView.setVisibility(View.GONE);
+            cashbackAmountView.setVisibility(View.GONE);
+            cashback = 0;
+            delCharge = 0;
+        }
+        appliedCode = codeDetails.get("code").toString();
+        deliveryAmountView.setText("₹ " + (int) delCharge);
+        progressDialog.dismiss();
     }
 
     private void setNewOrder() {
         Map<String, Object> newOrder = new HashMap<>();
+        Map<String, Object> newCode = new HashMap<>();
         newOrder.put("order id", allOrdersId);
         newOrder.put("order detail", orderDetails);
         newOrder.put("delivery address", shipAddress);
         newOrder.put("mode of payment", modeOfPayment);
         newOrder.put("total amount", orderAmount);
         newOrder.put("wallet cash", walletCash);
+        newOrder.put("cashback", cashback);
+
         newOrder.put("placed on", new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date()));
+        newOrder.put("time", new SimpleDateFormat("HH:mm", Locale.getDefault()).format(new Date()));
+        newOrder.put("type", type);
         newOrder.put("delivery fee", (int) delCharge);
         newOrder.put("status", "on going");
         newOrder.put("user id", FirebaseAuth.getInstance().getCurrentUser().getUid());
         newOrder.put("delivery note", deliveryNote);
 
+        if (appliedCode.length() != 0) {
+            newOrder.put("promo used", appliedCode);
+            newCode.put("code", appliedCode);
+            store.collection("users").document(FirebaseAuth.getInstance().getCurrentUser().getUid()).collection("codes used").document()
+                    .set(newCode);
+        }
         String userOrderNumber;
         if (currentOrderNo < 10)
             userOrderNumber = "0" + currentOrderNo;
@@ -195,6 +318,8 @@ public class checkoutPayment extends AppCompatActivity {
         store.collection("users").document(FirebaseAuth.getInstance().getCurrentUser().getUid()).update("wallet", FieldValue.increment(-1 * walletCash));
 
         store.collection("admin").document(place).update("order id", FieldValue.increment(1));
+
+
         prefConfig.onPlacingOrder(getApplicationContext());
         progressDialog.dismiss();
         confirmedDialog();

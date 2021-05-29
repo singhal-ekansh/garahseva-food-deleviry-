@@ -11,16 +11,19 @@ import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.health.UidHealthStats;
+import android.transition.TransitionManager;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,6 +32,7 @@ import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.card.MaterialCardView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -46,9 +50,10 @@ public class myAccount extends AppCompatActivity {
 
     FirebaseUser user;
     FirebaseFirestore fireStore;
-    Button logoutBtn, toMyOrderBtn, rateBtn, contactUs;
+    MaterialCardView logoutBtn, toMyOrderBtn, rateBtn, contactUs, addressToggle;
     ImageView editAddress;
-    String postalCode;
+    String postalCode, contact;
+    LinearLayout addressLayout;
     TextView signInAs, accName, accNumber, accAddress, accLandmark, accPostal, myWalletAmt;
 
 
@@ -74,6 +79,8 @@ public class myAccount extends AppCompatActivity {
         rateBtn = findViewById(R.id.rateAppBtn);
         contactUs = findViewById(R.id.contactUsBtn);
         editAddress = findViewById(R.id.addressEdit);
+        addressToggle = findViewById(R.id.viewAddress);
+        addressLayout = findViewById(R.id.deliveryAddLayout);
         signInAs.setText("User : " + user.getPhoneNumber());
 
 
@@ -102,6 +109,15 @@ public class myAccount extends AppCompatActivity {
                 }
             }
         });
+        fireStore.collection("admin").document(place).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    contact = document.get("contact").toString();
+                }
+            }
+        });
 
 
         toMyOrderBtn.setOnClickListener(new View.OnClickListener() {
@@ -126,7 +142,6 @@ public class myAccount extends AppCompatActivity {
                                     public void onComplete(@NonNull Task<Void> task) {
 
                                         finish();
-                                        overridePendingTransition(0, 0);
                                         Toast.makeText(getApplicationContext(), "logout successfully", Toast.LENGTH_SHORT).show();
                                     }
                                 });
@@ -148,7 +163,7 @@ public class myAccount extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_DIAL);
-                intent.setData(Uri.parse("tel:9398261339"));
+                intent.setData(Uri.parse("tel:" + contact));
                 startActivity(intent);
             }
         });
@@ -161,13 +176,22 @@ public class myAccount extends AppCompatActivity {
             }
         });
 
+        addressToggle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (addressLayout.getVisibility() == View.GONE) {
+                    TransitionManager.beginDelayedTransition(addressToggle);
+                    addressLayout.setVisibility(View.VISIBLE);
+                } else
+                    addressLayout.setVisibility(View.GONE);
+            }
+        });
     }
 
     private void editDialog() {
         final AlertDialog editAlertDialog;
         AlertDialog.Builder editAlert = new AlertDialog.Builder(myAccount.this);
         View view = getLayoutInflater().inflate(R.layout.edit_address_dialog, null);
-
         final EditText dName, dNumber, dAddress, dLandmark;
         Button dButton;
         TextView postalView;
@@ -185,7 +209,8 @@ public class myAccount extends AppCompatActivity {
 
         editAlert.setView(view);
         editAlertDialog = editAlert.create();
-        editAlertDialog.setCanceledOnTouchOutside(false);
+        editAlertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        editAlertDialog.setCanceledOnTouchOutside(true);
         editAlertDialog.setCancelable(true);
         editAlertDialog.show();
 
@@ -231,14 +256,13 @@ public class myAccount extends AppCompatActivity {
         Map<String, Object> addressMap = prefConfig.getAddressMap(getApplicationContext());
 
         if (addressMap != null) {
-            accName.setText("Name:  " + addressMap.get("name").toString());
-            accNumber.setText("Contact:  " + addressMap.get("contact").toString());
+            accName.setText("Name : " + addressMap.get("name").toString());
+            accNumber.setText("Contact : " + addressMap.get("contact").toString());
+            accPostal.setText("Postal code : " + postalCode);
+            accAddress.setText("Address : " + addressMap.get("delivery address").toString());
+            accLandmark.setText("Landmark : " + addressMap.get("landmark").toString());
+        } else
             accPostal.setText("Postal code:  " + postalCode);
-            accAddress.setText("Address:  " + addressMap.get("delivery address").toString());
-            accLandmark.setText("Landmark:  " + addressMap.get("landmark").toString());
-        }
-        else
-            accPostal.setText("Postal code:  "+postalCode);
     }
 
 
@@ -274,7 +298,7 @@ public class myAccount extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        overridePendingTransition(0, 0);
+
     }
 
 

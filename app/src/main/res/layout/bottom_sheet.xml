@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fff"
+    android:orientation="vertical"
+    android:padding="5dp">
+
+    <View
+        android:layout_width="100dp"
+        android:layout_height="3dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        android:background="#dedede" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:fontFamily="@font/raleway_medium"
+        android:text="Choose Delivery Location"
+        android:textSize="20sp" />
+
+    <Button
+        android:id="@+id/BtnVikas"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="15dp"
+        android:background="@drawable/white_bg"
+        android:fontFamily="@font/raleway_medium"
+        android:text="Vikasnagar"
+        android:textSize="18sp" />
+
+    <Button
+        android:id="@+id/BtnDak"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="15dp"
+        android:background="@drawable/white_bg"
+        android:fontFamily="@font/amethysta"
+        android:text="Dakpatthar"
+        android:textSize="18sp"
+        android:visibility="gone" />
+
+
+    <Button
+        android:id="@+id/BtnHer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/white_bg"
+        android:fontFamily="@font/amethysta"
+        android:text="Herbertpur"
+        android:textSize="18sp"
+        android:visibility="gone" />
+
+</LinearLayout>

@@ -25,7 +25,8 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:visibility="gone">
 
             <ImageView
                 android:id="@+id/subImageView"
@@ -49,8 +50,9 @@
             android:layout_margin="10dp"
             android:background="@drawable/heading_bg"
             android:elevation="5dp"
-            android:fontFamily="@font/acme"
+            android:fontFamily="@font/raleway_medium"
             android:gravity="center"
+            android:textStyle="bold"
             android:padding="8dp"
             android:text="Shop By Category"
             android:textSize="22sp" />
@@ -68,10 +70,11 @@
             android:id="@+id/bestOffersText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
+            android:layout_margin="8dp"
             android:elevation="10dp"
-            android:fontFamily="sans-serif-black"
+            android:fontFamily="@font/raleway_medium"
             android:padding="6dp"
+            android:textStyle="bold"
             android:text="Best Offers"
             android:textColor="#000"
             android:textSize="22sp" />
@@ -81,7 +84,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginBottom="10dp"
-            android:background="#ddd09a"
             android:elevation="3dp"
             android:focusable="false"
             android:padding="6dp" />

@@ -7,6 +7,7 @@ public class itemHelperClass {
 
     int itemQuantity, itemPrice, discount;
     String itemName, itemImage;
+    String imgLink;
 
 
     public String getItemImage() {
@@ -50,6 +51,15 @@ public class itemHelperClass {
     public void setItemQuantity(int itemQuantity) {
         this.itemQuantity = itemQuantity;
     }
+
+    public String getImgLink() {
+        return imgLink;
+    }
+
+    public void setImgLink(String imgLink) {
+        this.imgLink = imgLink;
+    }
+
 
     public itemHelperClass(String itemImage, String itemName, int itemPrice, int discount, int itemQuantity) {
         this.itemImage = itemImage;

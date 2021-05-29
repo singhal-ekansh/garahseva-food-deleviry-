@@ -4,22 +4,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="5dp"
+    android:layout_margin="6dp"
     android:background="@drawable/white_bg"
-    android:elevation="4dp"
-    android:padding="8dp">
+    android:elevation="5dp"
+    android:padding="10dp">
 
     <TextView
         android:id="@+id/orderIdView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:text="order id:  1002"
         android:layout_margin="5dp"
-        android:fontFamily="@font/acme"
+        android:fontFamily="@font/roboto_black"
+        android:text="Order id:  1002"
         android:textColor="#000"
-        android:textSize="20sp"/>
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/placedOnView"
@@ -27,10 +27,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
         android:layout_marginTop="15dp"
-        android:fontFamily="sans-serif-condensed"
+        android:fontFamily="@font/amethysta"
         android:text="Placed On:  22/09/2020"
         android:textColor="#000"
-        android:textSize="18sp"
+        android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/orderIdView" />
 
@@ -51,10 +51,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
         android:layout_marginTop="15dp"
-        android:fontFamily="sans-serif-condensed"
+        android:fontFamily="@font/amethysta"
         android:text="Amount:  Rs 580"
         android:textColor="#000"
-        android:textSize="18sp"
+        android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/placedOnView" />
 
@@ -65,10 +65,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
         android:layout_marginTop="15dp"
-        android:fontFamily="sans-serif-condensed"
+        android:fontFamily="@font/amethysta"
         android:text="payment mode:  COD"
         android:textColor="#000"
-        android:textSize="18sp"
+        android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/subAmtView" />
 

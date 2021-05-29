@@ -14,6 +14,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.ArrayList;
 
 public class itemAdapter extends RecyclerView.Adapter<itemAdapter.itemViewHolder> {
@@ -40,7 +42,9 @@ public class itemAdapter extends RecyclerView.Adapter<itemAdapter.itemViewHolder
 
         itemHelperClass helperClass = itemList.get(position);
 
+
         holder.itemImageView.setImageResource(context.getResources().getIdentifier(helperClass.getItemImage(), "drawable", context.getPackageName()));
+
 
         holder.itemNameView.setText(helperClass.getItemName());
         if (helperClass.getDiscount() == 0) {

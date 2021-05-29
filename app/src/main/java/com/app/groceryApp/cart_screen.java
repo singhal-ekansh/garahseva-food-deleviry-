@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -45,10 +46,11 @@ public class cart_screen extends Fragment implements cartAdapter.onCartItemClick
     RecyclerView.Adapter cartAdapter;
     View view;
     RelativeLayout checkoutView;
-    TextView totalAmount, emptyText;
+    TextView totalAmount;
+    LinearLayout emptyText;
     double amount;
     Button checkout;
-    private int RC_SIGN_IN = 500;
+    private final int RC_SIGN_IN = 500;
     AlertDialog progressDialog;
 
     @Override
@@ -62,6 +64,7 @@ public class cart_screen extends Fragment implements cartAdapter.onCartItemClick
         emptyText = view.findViewById(R.id.emptyWarning);
         emptyText.setVisibility(View.GONE);
         checkout = view.findViewById(R.id.checkoutBtn);
+
 
 
         checkout.setOnClickListener(new View.OnClickListener() {
@@ -156,6 +159,7 @@ public class cart_screen extends Fragment implements cartAdapter.onCartItemClick
     }
 
     private void setList(Context context) {
+        progressDialog();
         cartRecyclerView.setHasFixedSize(true);
 
         cartRecyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
@@ -181,6 +185,8 @@ public class cart_screen extends Fragment implements cartAdapter.onCartItemClick
 
 
         }
+        progressDialog.dismiss();
+
         cartAdapter = new cartAdapter(cartList, this, getContext());
         cartRecyclerView.setAdapter(cartAdapter);
     }

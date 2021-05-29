@@ -16,8 +16,18 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 import java.util.Map;
 
 public class myAddress extends AppCompatActivity {
@@ -28,6 +38,8 @@ public class myAddress extends AppCompatActivity {
     RadioButton radioButtonChecked, radioButtonOnHour, radioButtonOnDay, radioButtonNextDay;
     RadioGroup rGroup;
     AlertDialog progressDialog;
+    FirebaseFirestore firebaseFirestore;
+    int hour, day, nextDay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,18 +51,19 @@ public class myAddress extends AppCompatActivity {
         bar.setDisplayHomeAsUpEnabled(true);
         bar.setDisplayShowHomeEnabled(true);
 
-
         nameView = findViewById(R.id.editTextTextPersonName);
         phoneView = findViewById(R.id.editTextPhone);
         addressView = findViewById(R.id.editTextAddress);
         landmarkView = findViewById(R.id.editTextLandmark);
         submitBtn = findViewById(R.id.addAddressBtn);
         placeView = findViewById(R.id.postalCodeView);
+        firebaseFirestore = FirebaseFirestore.getInstance();
 
         rGroup = findViewById(R.id.optionGroup);
         radioButtonOnHour = findViewById(R.id.onHour);
         radioButtonOnDay = findViewById(R.id.onDay);
         radioButtonNextDay = findViewById(R.id.nextDay);
+        progressDialog();
 
         String place = prefConfig.getDeliveryLocation(getApplicationContext());
 
@@ -67,7 +80,20 @@ public class myAddress extends AppCompatActivity {
         }
         placeView.setText(postalCode);
         getSavedAddress();
-        setDeliverySlots();
+
+        firebaseFirestore.collection("admin").document(place).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    hour = (int) (long) document.get("hour charge");
+                    day = (int) (long) document.get("day charge");
+                    nextDay = (int) (long) document.get("next day charge");
+                    setDeliverySlots();
+                }
+            }
+        });
+
 
         final Intent prevIntent = getIntent();
 
@@ -80,12 +106,16 @@ public class myAddress extends AppCompatActivity {
                     radioButtonChecked = findViewById(rGroup.getCheckedRadioButtonId());
 
                     Intent intent = new Intent(myAddress.this, checkoutPayment.class);
-                    if (radioButtonChecked.getId() == R.id.onHour)
+                    if (radioButtonChecked.getId() == R.id.onHour) {
                         intent.putExtra("type", 1);
-                    else if (radioButtonChecked.getId() == R.id.onDay)
+                        intent.putExtra("delCharge", (double) hour);
+                    } else if (radioButtonChecked.getId() == R.id.onDay) {
                         intent.putExtra("type", 2);
-                    else
+                        intent.putExtra("delCharge", (double) day);
+                    } else {
                         intent.putExtra("type", 3);
+                        intent.putExtra("delCharge", (double) nextDay);
+                    }
 
                     intent.putExtra("cartAmount", prevIntent.getDoubleExtra("cartValue", 0));
                     progressDialog.dismiss();
@@ -104,13 +134,18 @@ public class myAddress extends AppCompatActivity {
 
     private void setDeliverySlots() {
         Calendar rightNow = Calendar.getInstance();
+        radioButtonOnHour.setText("1 Hour delivery (Rs-" + hour + ")");
+        radioButtonOnDay.setText("On Day delivery (Rs-" + day + ")");
+        radioButtonNextDay.setText("Next Day delivery (Rs-" + nextDay + ")");
+
+
         int currentHourIn24Format = rightNow.get(Calendar.HOUR_OF_DAY); // return the hour in 24 hrs format (ranging from 0-23)
 
-        if (currentHourIn24Format >= 19) {
+        if (currentHourIn24Format >= 19 || currentHourIn24Format <= 8) {
             radioButtonOnHour.setVisibility(View.GONE);
             radioButtonOnDay.setChecked(true);
         }
-        if (currentHourIn24Format >= 15) {
+        if (currentHourIn24Format >= 16) {
             radioButtonOnDay.setVisibility(View.GONE);
 
             if (currentHourIn24Format >= 19)
@@ -119,6 +154,7 @@ public class myAddress extends AppCompatActivity {
                 radioButtonOnHour.setChecked(true);
 
         }
+        progressDialog.dismiss();
     }
 
     private void getSavedAddress() {

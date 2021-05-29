@@ -32,7 +32,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         String notificationMessage = remoteMessage.getData().get("notificationMessage");
 
 
-        if (notificationType.equals("OrderDelivered")) {
+        if (notificationType.equals("OrderDelivered")||notificationType.equals("OrderCancelled")) {
             Intent intent = new Intent(this, myOrders.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);

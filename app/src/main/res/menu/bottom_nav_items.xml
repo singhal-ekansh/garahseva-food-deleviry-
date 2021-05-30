@@ -18,7 +18,7 @@
 
     <item
         android:id="@+id/c"
-        android:title="My Cart"
+        android:title="Grocery Cart"
         android:icon="@drawable/ic_baseline_shopping_cart_24"/>
 
 

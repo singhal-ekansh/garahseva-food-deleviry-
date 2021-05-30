@@ -10,6 +10,7 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class prefConfig {
@@ -164,6 +165,64 @@ public class prefConfig {
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString("myCartList", jsonString);
         editor.apply();
+    }
+
+    public static void saveFoodOrderList(Context context, List<RestaurantData> list) {
+
+        Gson gson = new Gson();
+        String jsonString = gson.toJson(list);
+        if (list.size()==0) {
+            prefConfig.changeCurrentRestaurant(context, "");
+        }
+        SharedPreferences preferences = context.getSharedPreferences("myDetails", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("foodCartList", jsonString);
+        editor.apply();
+
+    }
+
+    public static List<RestaurantData> getFoodOrderList(Context context) {
+        SharedPreferences preferences = context.getSharedPreferences("myDetails", Context.MODE_PRIVATE);
+        String jsonString = preferences.getString("foodCartList", "");
+
+        Gson gson = new Gson();
+        Type type = new TypeToken<List<RestaurantData>>() {
+        }.getType();
+
+        List<RestaurantData> list;
+        list = gson.fromJson(jsonString, type);
+
+        if (list == null)
+            list = new ArrayList<>();
+        return list;
+    }
+
+    public static void clearFoodOrderList(Context context) {
+
+        List<RestaurantData> list = new ArrayList<>();
+        Gson gson = new Gson();
+        String jsonString = gson.toJson(list);
+
+        SharedPreferences preferences = context.getSharedPreferences("myDetails", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("foodCartList", jsonString);
+        editor.apply();
+
+    }
+
+    public static void changeCurrentRestaurant(Context context, String _id) {
+
+
+        SharedPreferences preferences = context.getSharedPreferences("myDetails", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("restaurantSelected", _id);
+        editor.apply();
+
+    }
+
+    public static String getCurrentRestaurant(Context context) {
+        SharedPreferences preferences = context.getSharedPreferences("myDetails", Context.MODE_PRIVATE);
+        return preferences.getString("restaurantSelected", "");
     }
 
     public static void registerPref(Context context, SharedPreferences.OnSharedPreferenceChangeListener listener) {

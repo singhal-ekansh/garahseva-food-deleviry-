@@ -5,12 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#fff"
-    tools:context=".FoodFragment">
+    tools:context=".fragments.FoodFragment">
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/nestedScrollView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/orderDetail"
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -21,15 +23,15 @@
                 android:id="@+id/numberOfPlaces"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="10dp"
                 android:fontFamily="@font/roboto_medium"
+                android:padding="10dp"
                 android:textSize="20sp"
                 tools:text="150 Restaurants Near You" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/restaurantsRecycler"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content" />
 
         </LinearLayout>
 
@@ -44,4 +46,58 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/orderDetail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:elevation="5dp"
+        android:theme="@style/AppThemeMaterial"
+        android:visibility="gone"
+        app:cardCornerRadius="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nestedScrollView">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary">
+
+            <TextView
+                android:id="@+id/savedResName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:textColor="#fff"
+                android:textSize="15sp"
+                tools:text="Restaurant Name" />
+
+            <TextView
+                android:id="@+id/totalPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/savedResName"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginBottom="5dp"
+                android:text="you have saved items in cart"
+                android:textColor="#fff"
+                android:textSize="13sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="8dp"
+                android:text="View"
+                android:textColor="#fff"
+                android:textSize="15sp"
+                app:drawableEndCompat="@drawable/ic_baseline_keyboard_arrow_right_24"
+                app:drawableTint="#fff" />
+        </RelativeLayout>
+    </com.google.android.material.card.MaterialCardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

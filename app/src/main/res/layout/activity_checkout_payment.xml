@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#dedede"
-    tools:context="com.app.groceryApp.checkoutPayment">
+    tools:context="com.app.groceryApp.activities.checkoutPayment">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"

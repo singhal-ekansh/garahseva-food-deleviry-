@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#dedede"
-    tools:context=".GroceryFragment">
+    tools:context=".fragments.GroceryFragment">
 
     <LinearLayout
         android:layout_width="match_parent"

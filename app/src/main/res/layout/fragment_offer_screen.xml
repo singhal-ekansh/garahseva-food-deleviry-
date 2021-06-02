@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
 
-    tools:context=".offer_screen">
+    tools:context=".fragments.offer_screen">
 
     <TextView
         android:id="@+id/tex1"

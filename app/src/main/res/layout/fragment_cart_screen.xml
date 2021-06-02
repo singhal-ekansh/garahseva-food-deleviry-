@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".cart_screen">
+    tools:context=".fragments.cart_screen">
 
     <LinearLayout
         android:id="@+id/emptyWarning"

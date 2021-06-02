@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#dedede"
-    tools:context=".MainActivity">
+    tools:context=".activities.MainActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/mainToolbar"
@@ -85,6 +85,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#fff"
+        android:visibility="gone"
         android:elevation="25dp"
         android:theme="@style/AppThemeMaterial"
         app:labelVisibilityMode="labeled"

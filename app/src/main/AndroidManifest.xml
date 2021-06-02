@@ -12,29 +12,31 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity
-            android:name=".RestaurantDetailActivity"
+        <activity android:name=".activities.PlaceOrderActivity"
             android:theme="@style/AppTheme2"/>
         <activity
-            android:name=".currentOrderInfo"
+            android:name=".restaurants.RestaurantDetailActivity"
             android:theme="@style/AppTheme2" />
         <activity
-            android:name=".myOrders"
+            android:name=".activities.currentOrderInfo"
             android:theme="@style/AppTheme2" />
         <activity
-            android:name=".checkoutPayment"
+            android:name=".activities.myOrders"
             android:theme="@style/AppTheme2" />
         <activity
-            android:name=".myAddress"
+            android:name=".activities.checkoutPayment"
             android:theme="@style/AppTheme2" />
         <activity
-            android:name=".myAccount"
+            android:name=".activities.myAddress"
+            android:theme="@style/AppTheme2" />
+        <activity
+            android:name=".activities.myAccount"
             android:theme="@style/AppThemeMaterial" />
-        <activity android:name=".searchBar" />
-        <activity android:name=".itemList" />
-        <activity android:name=".subCategory" />
+        <activity android:name=".activities.searchBar" />
+        <activity android:name=".groceries.itemList" />
+        <activity android:name=".groceries.subCategory" />
         <activity
-            android:name=".MainActivity"
+            android:name=".activities.MainActivity"
             android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -43,7 +45,7 @@
             </intent-filter>
         </activity>
 
-        <service android:name=".MyFirebaseMessagingService">
+        <service android:name=".utils.MyFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#fff"
-    tools:context="com.app.groceryApp.myAccount">
+    tools:context="com.app.groceryApp.activities.myAccount">
 
     <LinearLayout
         android:layout_width="match_parent"

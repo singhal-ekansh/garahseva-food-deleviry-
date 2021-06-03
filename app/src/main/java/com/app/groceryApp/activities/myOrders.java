@@ -1,6 +1,7 @@
 package com.app.groceryApp.activities;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -18,7 +19,10 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.gson.Gson;
@@ -31,10 +35,9 @@ public class myOrders extends AppCompatActivity implements myOrderAdapter.onOrde
 
     RecyclerView orderRecycler;
     FirebaseFirestore store;
-    int noOfOrders, i;
     TextView noOrder;
-    RecyclerView.Adapter Adapter;
-    List<Map<String, Object>> myOrdersList;
+    myOrderAdapter Adapter;
+    List<OrderDetailClass> myOrdersList;
     ProgressBar progressBar;
 
 
@@ -50,58 +53,26 @@ public class myOrders extends AppCompatActivity implements myOrderAdapter.onOrde
         progressBar = findViewById(R.id.orderProgressBar);
 
         orderRecycler = findViewById(R.id.ordersRecycler);
+        orderRecycler.setHasFixedSize(true);
+        orderRecycler.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
         noOrder = findViewById(R.id.noOrderTxt);
 
         store = FirebaseFirestore.getInstance();
 
-    }
-
-    private void setOrdersRecycler() {
-        orderRecycler.setHasFixedSize(true);
-        orderRecycler.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
-
-        Adapter = new myOrderAdapter(myOrdersList, this);
-        orderRecycler.setVisibility(View.VISIBLE);
-        orderRecycler.setAdapter(Adapter);
-        progressBar.setVisibility(View.GONE);
-    }
-
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        progressBar.setVisibility(View.VISIBLE);
-        myOrdersList = new ArrayList<>();
-        store.collection("users").document(FirebaseAuth.getInstance().getCurrentUser().getUid()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+        store.collection("users").document(FirebaseAuth.getInstance().getCurrentUser().getUid()).collection("orders")
+                .orderBy("timestamp", Query.Direction.DESCENDING).addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    noOfOrders = (int) (long) document.get("no of orders");
-
-                    if (noOfOrders == 0) {
-                        progressBar.setVisibility(View.GONE);
-                        noOrder.setVisibility(View.VISIBLE);
-                        orderRecycler.setVisibility(View.GONE);
-                    } else {
-
-                        store.collection("users").document(FirebaseAuth.getInstance().getCurrentUser().getUid()).collection("orders").get()
-                                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                        if (task.isSuccessful()) {
-                                            for (QueryDocumentSnapshot document : task.getResult()) {
-
-                                                myOrdersList.add(0, document.getData());
-
-
-                                            }
-                                            setOrdersRecycler();
-                                        }
-                                    }
-                                });
-
+            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                if (value != null && !value.isEmpty()) {
+                    myOrdersList = new ArrayList<>();
+                    int i = 0;
+                    for (DocumentSnapshot documentSnapshot : value.getDocuments()) {
+                        myOrdersList.add(documentSnapshot.toObject(OrderDetailClass.class));
+                        myOrdersList.get(i).setOrder_id(documentSnapshot.getId());
+                        i++;
                     }
+                    Adapter = new myOrderAdapter(myOrdersList, myOrders.this);
+                    orderRecycler.setAdapter(Adapter);
                 }
             }
         });
@@ -125,12 +96,10 @@ public class myOrders extends AppCompatActivity implements myOrderAdapter.onOrde
     public void onOrderClick(int position) {
         Intent intent = new Intent(myOrders.this, currentOrderInfo.class);
 
-        Map<String, Object> map = myOrdersList.get(position);
         Gson gson = new Gson();
-        String jsonMap = gson.toJson(map);
+        String jsonMap = gson.toJson(myOrdersList.get(position));
         intent.putExtra("map", jsonMap);
-        orderRecycler.setVisibility(View.GONE);
         startActivity(intent);
-        overridePendingTransition(0, 0);
+
     }
 }

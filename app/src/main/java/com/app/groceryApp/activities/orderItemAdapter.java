@@ -10,14 +10,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.app.groceryApp.R;
 import com.app.groceryApp.groceries.itemHelperClass;
+import com.app.groceryApp.restaurants.RestaurantData;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class orderItemAdapter extends RecyclerView.Adapter<orderItemAdapter.orderItemViewHolder> {
 
-    ArrayList<itemHelperClass> itemList;
+    List<RestaurantData> itemList;
 
-    public orderItemAdapter(ArrayList<itemHelperClass> itemList) {
+    public orderItemAdapter(List<RestaurantData> itemList) {
         this.itemList = itemList;
     }
 
@@ -30,12 +32,11 @@ public class orderItemAdapter extends RecyclerView.Adapter<orderItemAdapter.orde
 
     @Override
     public void onBindViewHolder(@NonNull orderItemViewHolder holder, int position) {
-        itemHelperClass helperClass = itemList.get(position);
+        RestaurantData helperClass = itemList.get(position);
 
-        holder.itemNameView.setText(helperClass.getItemName());
-        holder.itemQtyView.setText("x" + helperClass.getItemQuantity());
-        double newPrice = helperClass.getItemPrice() - helperClass.getItemPrice() * (helperClass.getDiscount() * 0.01);
-        holder.itemPriceView.setText("" + newPrice);
+        holder.itemNameView.setText(helperClass.getName());
+        holder.itemQtyView.setText(helperClass.getQuantitySelected() + " x");
+        holder.itemPriceView.setText("₹ " + helperClass.getPrice());
 
 
     }

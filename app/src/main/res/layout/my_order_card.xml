@@ -11,50 +11,59 @@
 
     <TextView
         android:id="@+id/orderIdView"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
-        android:fontFamily="@font/roboto_black"
-        android:text="Order id:  1002"
-        android:textColor="#000"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="parent"
+        android:text="Id : 1002"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/orderResName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:singleLine="true"
+        android:textColor="#000"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@+id/orderIdView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Restaurant Name" />
 
     <TextView
         android:id="@+id/placedOnView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
-        android:layout_marginTop="15dp"
-        android:fontFamily="@font/amethysta"
-        android:text="Placed On:  22/09/2020"
-        android:textColor="#000"
-        android:textSize="16sp"
+        android:layout_marginTop="5dp"
+        android:textSize="15sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/orderIdView" />
+        app:layout_constraintTop_toBottomOf="@id/orderIdView"
+        tools:text="Placed On:  22/09/2020" />
 
     <TextView
         android:id="@+id/orderStatusView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
-        android:fontFamily="@font/archivo_black"
-        android:text="Pending"
-        android:textSize="20sp"
+        android:fontFamily="@font/raleway_medium"
+        android:textAllCaps="true"
+        android:textColor="#CCA646"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        tools:text="Pending" />
 
     <TextView
         android:id="@+id/subAmtView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
-        android:layout_marginTop="15dp"
-        android:fontFamily="@font/amethysta"
+        android:layout_marginTop="5dp"
         android:text="Amount:  Rs 580"
-        android:textColor="#000"
-        android:textSize="16sp"
+        android:textSize="15sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/placedOnView" />
 
@@ -63,12 +72,10 @@
         android:id="@+id/paymentType"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="15dp"
-        android:fontFamily="@font/amethysta"
+        android:layout_margin="5dp"
         android:text="payment mode:  COD"
-        android:textColor="#000"
-        android:textSize="16sp"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/subAmtView" />
 

@@ -12,15 +12,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.app.groceryApp.R;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 public class myOrderAdapter extends RecyclerView.Adapter<myOrderAdapter.ordersViewHolder> {
 
-    List<Map<String, Object>> myOrdersList;
+    List<OrderDetailClass> myOrdersList;
     onOrderClickListener onOrderClickListener;
 
-    public myOrderAdapter(List<Map<String, Object>> myOrdersList, onOrderClickListener onOrderClickListener) {
+    public myOrderAdapter(List<OrderDetailClass> myOrdersList, onOrderClickListener onOrderClickListener) {
         this.myOrdersList = myOrdersList;
         this.onOrderClickListener = onOrderClickListener;
     }
@@ -36,17 +38,20 @@ public class myOrderAdapter extends RecyclerView.Adapter<myOrderAdapter.ordersVi
     @Override
     public void onBindViewHolder(@NonNull ordersViewHolder holder, int position) {
 
-        Map<String, Object> map = myOrdersList.get(position);
-        holder.placedDate.setText("Placed On:   " + map.get("placed on").toString());
-        holder.orderAmount.setText("Amount:   ₹ " + map.get("total amount"));
-        holder.modeOfPayment.setText("Payment Mode:   " + map.get("mode of payment").toString());
-        holder.orderId.setText("Order Id:   " + map.get("order id").toString());
-        String status = (map.get("status").toString());
-        holder.orderStatus.setText(map.get("status").toString());
+        OrderDetailClass orderDetail = myOrdersList.get(position);
+        Date date = new Date(Long.parseLong(orderDetail.getTimestamp()) * 1000);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy  - HH:mm");
+        holder.placedDate.setText("Placed on : " + simpleDateFormat.format(date));
+        holder.orderAmount.setText("Amount : ₹ " + orderDetail.getTotal_amount());
+        holder.modeOfPayment.setText("Payment Mode : Cash on delivery");
+        holder.orderId.setText("Id : " + orderDetail.getOrder_id().substring(0, 8).toUpperCase());
+        holder.restaurantName.setText(orderDetail.getRestaurant_name());
+        String status = orderDetail.getStatus();
+        holder.orderStatus.setText(status);
 
-        if (status.equals("on going"))
+        if (status.equals("pending"))
             holder.orderStatus.setTextColor(Color.parseColor("#CCA646"));
-        else if (status.equals("completed"))
+        else if (status.equals("delivered"))
             holder.orderStatus.setTextColor(Color.parseColor("#149414"));
         else
             holder.orderStatus.setTextColor(Color.parseColor("#E00201"));
@@ -60,7 +65,7 @@ public class myOrderAdapter extends RecyclerView.Adapter<myOrderAdapter.ordersVi
 
     public static class ordersViewHolder extends RecyclerView.ViewHolder {
 
-        TextView placedDate, orderStatus, modeOfPayment, orderAmount, orderId;
+        TextView placedDate, orderStatus, modeOfPayment, orderAmount, orderId, restaurantName;
         onOrderClickListener onOrderClickListener;
 
         public ordersViewHolder(@NonNull View itemView, final onOrderClickListener onOrderClickListener) {
@@ -70,6 +75,7 @@ public class myOrderAdapter extends RecyclerView.Adapter<myOrderAdapter.ordersVi
             modeOfPayment = itemView.findViewById(R.id.paymentType);
             orderAmount = itemView.findViewById(R.id.subAmtView);
             orderId = itemView.findViewById(R.id.orderIdView);
+            restaurantName = itemView.findViewById(R.id.orderResName);
             this.onOrderClickListener = onOrderClickListener;
 
             itemView.setOnClickListener(new View.OnClickListener() {

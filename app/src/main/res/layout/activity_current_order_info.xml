@@ -9,281 +9,200 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="4dp"
         android:orientation="vertical">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:padding="5dp"
-            android:text="Address"
-            android:fontFamily="@font/roboto_black"
-            android:textSize="20sp" />
+            android:fontFamily="@font/raleway_medium"
+            android:padding="10dp"
+            android:text="Item Details"
+            android:textColor="#000"
+            android:textSize="18dp" />
 
-        <LinearLayout
+        <View
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:background="@drawable/white_bg"
-            android:elevation="5dp"
-            android:orientation="vertical"
-            android:padding="8dp">
-
-            <TextView
-                android:id="@+id/customerName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:fontFamily="@font/amethysta"
-                android:text="Ekansh Singhal"
-                android:textColor="#000"
-                android:textSize="16sp" />
-
-            <TextView
-                android:id="@+id/customerNumber"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:fontFamily="@font/amethysta"
-                android:text="9368261339"
-                android:textColor="#000"
-                android:textSize="16sp" />
-
-            <TextView
-                android:id="@+id/customerAddress"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:fontFamily="@font/amethysta"
-                android:text="Vidhya Peeth Marg Vikasnagar"
-                android:textColor="#000"
-                android:textSize="16sp" />
-
-            <TextView
-                android:id="@+id/customerLandmark"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="3dp"
-                android:fontFamily="@font/amethysta"
-                android:text="Landmark: near garden resort"
-                android:textColor="#000"
-                android:textSize="16sp" />
-
-            <TextView
-                android:id="@+id/customerPostal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="3dp"
-                android:fontFamily="@font/amethysta"
-                android:text="Postal code: 248198"
-                android:textColor="#000"
-                android:textSize="16sp" />
-
-
-        </LinearLayout>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="10dp"
-            android:padding="5dp"
-            android:text="Items "
-            android:fontFamily="@font/roboto_black"
-            android:textSize="20sp" />
+            android:layout_height="1dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:background="#dedede" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/itemsList"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:elevation="5dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:padding="5dp"
-            android:text="Payment Details"
-            android:fontFamily="@font/roboto_black"
-            android:textSize="20sp" />
+            android:layout_marginTop="15dp" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:background="@drawable/white_bg"
-            android:elevation="5dp"
-            android:padding="8dp">
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="15dp"
+            android:elevation="10dp">
 
             <TextView
-                android:id="@+id/l0"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:text="Order ID :"
-                android:fontFamily="@font/amethysta"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/raleway_medium"
+                android:text="Item Total"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
-
-
-            <TextView
-                android:id="@+id/l1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:layout_marginStart="5dp"
-                android:text="Payment mode :"
-                android:fontFamily="@font/amethysta"
-                android:textSize="16sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/l0" />
-
-            <TextView
-                android:id="@+id/l2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="15dp"
-                android:text="Cart amount :"
-                android:fontFamily="@font/amethysta"
-                android:textSize="16sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/l1" />
-
-            <TextView
-                android:id="@+id/l3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="15dp"
-                android:text="Delivery fee :"
-                android:fontFamily="@font/amethysta"
-                android:textSize="16sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/l2" />
-
-            <TextView
-                android:id="@+id/l4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="15dp"
-                android:text="Wallet Cash :"
-                android:fontFamily="@font/amethysta"
-                android:visibility="gone"
-                android:textSize="16sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/l3" />
-
-            <TextView
-                android:id="@+id/l5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="15dp"
-                android:text="Total Amount :"
-                android:fontFamily="@font/amethysta"
-                android:textColor="#000"
-                android:textSize="16sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/l4" />
-
-            <TextView
-                android:id="@+id/payId"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:text="10000"
-                android:fontFamily="@font/roboto_medium"
-                android:textColor="#000"
-                android:textSize="16sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-            <TextView
-                android:id="@+id/payMode"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:layout_marginEnd="5dp"
-                android:text="cash on delivery"
-                android:fontFamily="@font/roboto_medium"
-                android:textColor="#000"
-                android:textSize="16sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/payId" />
 
             <TextView
                 android:id="@+id/cartAmt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:layout_marginEnd="5dp"
-                android:text="Rs 500"
-                android:fontFamily="@font/roboto_medium"
-                android:textColor="#000"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="15dp"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/payMode" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="$ 500" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="35dp"
+                android:fontFamily="@font/raleway_medium"
+                android:text="Delivery Charge"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/deliveryAmount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:layout_marginEnd="5dp"
-                android:text="Rs 50"
-                android:fontFamily="@font/roboto_medium"
-                android:textColor="#000"
+                android:layout_marginTop="35dp"
+                android:layout_marginEnd="15dp"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/cartAmt" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="$ 50" />
 
             <TextView
-                android:id="@+id/walletAmount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:layout_marginEnd="5dp"
-                android:text="- Rs 50"
-                android:fontFamily="@font/roboto_medium"
-                android:visibility="gone"
-                android:textColor="#000"
-                android:textSize="16sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/deliveryAmount" />
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="65dp"
+                android:fontFamily="@font/raleway_medium"
+                android:text="Grand Total"
+                android:textSize="17sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/totalAmount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:layout_marginEnd="5dp"
-                android:text="Rs 550"
-                android:fontFamily="@font/roboto_black"
-                android:textColor="@color/colorPrimaryDark"
+                android:layout_marginTop="65dp"
+                android:layout_marginEnd="15dp"
+                android:textColor="#000"
                 android:textSize="17sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/walletAmount" />
-
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="$ 550" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-        <Button
-            android:id="@+id/cancelOrderBtn"
-            android:layout_width="match_parent"
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:background="@color/colorPrimary"
-            android:text="Cancel Order"
-            android:visibility="gone"
-            android:textColor="#fff"
-            android:textSize="25sp" />
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/raleway_medium"
+            android:padding="10dp"
+            android:text="Order Details"
+            android:textColor="#000"
+            android:textSize="18dp" />
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:background="#dedede" />
 
+        <TextView
+            android:id="@+id/payId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="5dp"
+            android:textSize="14sp"
+            tools:text="Id : 0001" />
+
+        <TextView
+            android:id="@+id/restName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="5dp"
+            android:textSize="14sp"
+            tools:text="From : " />
+
+        <TextView
+            android:id="@+id/ordStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="5dp"
+            android:textSize="14sp"
+            tools:text="Status : " />
+
+        <TextView
+            android:id="@+id/payMode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="5dp"
+            android:text="Payment Mode : Cash on delivery"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/placedOn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="5dp"
+            android:textSize="14sp"
+            tools:text="Placed on : " />
+
+        <TextView
+            android:id="@+id/customerAddress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="5dp"
+            android:textSize="14sp"
+            tools:text="Deliver to : " />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:background="#dedede" />
+
+        <TextView
+            android:id="@+id/callBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="15dp"
+            android:drawablePadding="5dp"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="Contact Restaurant"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="14sp"
+            app:drawableStartCompat="@drawable/ic_baseline_local_phone_24"
+            app:drawableTint="@color/colorPrimaryDark" />
     </LinearLayout>
 
 

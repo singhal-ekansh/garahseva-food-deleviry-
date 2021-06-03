@@ -81,20 +81,21 @@ public class PlaceOrderActivity extends AppCompatActivity implements SharedPrefe
             @Override
             public void onClick(View view) {
                 Map<String, Object> newOrder = new HashMap<>();
-                newOrder.put("delivery address", prefConfig.getAddressJson(getApplicationContext()));
-                newOrder.put("order detail", new Gson().toJson(prefConfig.getFoodOrderList(getApplicationContext())));
-                newOrder.put("total amount", String.valueOf(AmountTotal));
-                newOrder.put("user id", FirebaseAuth.getInstance().getCurrentUser().getUid());
+                newOrder.put("delivery_address", prefConfig.getAddressJson(getApplicationContext()));
+                newOrder.put("order_detail", new Gson().toJson(prefConfig.getFoodOrderList(getApplicationContext())));
+                newOrder.put("total_amount", String.valueOf(AmountTotal));
+                newOrder.put("user_id", FirebaseAuth.getInstance().getCurrentUser().getUid());
                 newOrder.put("timestamp", String.valueOf((new Date().getTime()) / 1000));
-                newOrder.put("status", "on going");
+                newOrder.put("status", "pending");
 
                 firebaseFirestore.collection("restaurants").document(getIntent().getStringExtra("restaurant_id")).collection("orders").add(newOrder).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
                     @Override
                     public void onComplete(@NonNull Task<DocumentReference> task) {
                         if (task.isSuccessful()) {
                             DocumentReference documentReference = task.getResult();
-                            newOrder.put("restaurant id", getIntent().getStringExtra("restaurant_id"));
-                            newOrder.remove("user id");
+                            newOrder.put("restaurant_id", getIntent().getStringExtra("restaurant_id"));
+                            newOrder.put("restaurant_name", getIntent().getStringExtra("restaurant_name"));
+                            newOrder.remove("user_id");
                             firebaseFirestore.collection("users").document(FirebaseAuth.getInstance().getCurrentUser().getUid()).collection("orders").document(documentReference.getId()).set(newOrder).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {

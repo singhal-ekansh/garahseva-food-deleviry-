@@ -19,7 +19,6 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 
 import com.app.groceryApp.R;
-import com.app.groceryApp.utils.prefConfig;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 public class BottomSheetLocation extends BottomSheetDialogFragment {

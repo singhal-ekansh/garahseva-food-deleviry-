@@ -1,46 +1,7 @@
 package com.app.groceryApp.fragments;
-
-import android.content.Intent;
-import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
-
-
-import com.app.groceryApp.groceries.HorizontalCardItemAdapter;
-import com.app.groceryApp.R;
-import com.app.groceryApp.groceries.bannerLinks;
-import com.app.groceryApp.groceries.categoryAdapter;
-import com.app.groceryApp.groceries.categoryHelperClass;
-import com.app.groceryApp.groceries.itemHelperClass;
-import com.app.groceryApp.groceries.itemList;
-import com.app.groceryApp.activities.myOrders;
-import com.app.groceryApp.utils.prefConfig;
-import com.app.groceryApp.groceries.subCategory;
-import com.denzcoskun.imageslider.ImageSlider;
-import com.denzcoskun.imageslider.constants.ScaleTypes;
-import com.denzcoskun.imageslider.interfaces.ItemClickListener;
-import com.denzcoskun.imageslider.models.SlideModel;
-
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
-
-import java.util.ArrayList;
-import java.util.List;
-
+  /*
 public class GroceryFragment extends Fragment implements categoryAdapter.onCategoryListener, HorizontalCardItemAdapter.onHorizontalItemListener {
+
     ImageSlider imageSlider;
     List<SlideModel> slideModelList;
     RecyclerView homeCategoryRecycler, homeOfferRecycler;
@@ -275,4 +236,8 @@ public class GroceryFragment extends Fragment implements categoryAdapter.onCateg
 
 
     }
+
+
 }
+
+   */

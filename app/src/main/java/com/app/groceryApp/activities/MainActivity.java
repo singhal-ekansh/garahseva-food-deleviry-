@@ -1,11 +1,5 @@
 package com.app.groceryApp.activities;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -17,12 +11,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.app.groceryApp.utils.BottomSheetLocation;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+
 import com.app.groceryApp.R;
 import com.app.groceryApp.fragments.FoodFragment;
-import com.app.groceryApp.fragments.GroceryFragment;
-import com.app.groceryApp.fragments.offer_screen;
-import com.app.groceryApp.groceries.itemHelperClass;
+import com.app.groceryApp.utils.BottomSheetLocation;
 import com.app.groceryApp.utils.prefConfig;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
@@ -33,7 +29,6 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.messaging.FirebaseMessaging;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -44,7 +39,6 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     BottomNavigationView bottomNavigationView;
     Fragment selectedFragment;
     Toolbar toolbar;
-    ArrayList<itemHelperClass> myCartList;
     int RC_SIGN_IN = 500, x = 0;
     LinearLayout choseLocationLayout;
     TextView locationText;
@@ -69,15 +63,6 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         bottomSheetLocation = new BottomSheetLocation();
         place = prefConfig.getDeliveryLocation(getApplicationContext());
         locationText.setText(place);
-
-
-        //on re selecting navView item fragment should not load again
-        bottomNavigationView.setOnNavigationItemReselectedListener(new BottomNavigationView.OnNavigationItemReselectedListener() {
-            @Override
-            public void onNavigationItemReselected(@NonNull MenuItem item) {
-
-            }
-        });
 
         choseLocationLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -130,7 +115,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         }
     };
 
-
+/*
     private final BottomNavigationView.OnNavigationItemSelectedListener navigationItemSelectedListener =
             new BottomNavigationView.OnNavigationItemSelectedListener() {
                 @Override
@@ -140,28 +125,26 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
 
                     switch (item.getItemId()) {
 
-                        case R.id.a:
+                      case R.id.a:
                             selectedFragment = new GroceryFragment();
                             choseLocationLayout.setVisibility(View.VISIBLE);
                             toolbar.setTitle("Grocery");
                             break;
+
+
                         case R.id.aa:
                             selectedFragment = new FoodFragment();
                             choseLocationLayout.setVisibility(View.VISIBLE);
                             toolbar.setTitle("Food");
                             break;
-                        case R.id.b:
+                       case R.id.b:
                             selectedFragment = new offer_screen();
                             toolbar.setTitle("Offers");
                             choseLocationLayout.setVisibility(View.VISIBLE);
                             break;
-                     /*   case R.id.c:
-                            selectedFragment = new cart_screen();
-                            choseLocationLayout.setVisibility(View.VISIBLE);
-                            toolbar.setTitle("My Cart");
-                            break;
 
-                      */
+
+
                     }
 
                     getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, selectedFragment).commit();
@@ -169,6 +152,8 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                     return true;
                 }
             };
+
+ */
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -197,48 +182,15 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         }
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-
-        myCartList = prefConfig.getList(getApplicationContext());
-
-        if (myCartList == null)
-            myCartList = new ArrayList<>();
-/*
-        if (myCartList.size() != 0)
-            bottomNavigationView.getOrCreateBadge(R.id.c).setNumber(myCartList.size());
-        else
-            bottomNavigationView.removeBadge(R.id.c);
-
-
- */
-
-    }
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        if (key.equals("myCartList")) {
-            myCartList = prefConfig.getList(getApplicationContext());
-
-            if (myCartList == null)
-                myCartList = new ArrayList<>();
-/*
-            if (myCartList.size() != 0)
-                bottomNavigationView.getOrCreateBadge(R.id.c).setNumber(myCartList.size());
-            else
-                bottomNavigationView.removeBadge(R.id.c);
-
-
- */
-        } else if (key.equals("deliveryArea")) {
+        if (key.equals("deliveryArea")) {
             placeSelected = prefConfig.getDeliveryLocation(getApplicationContext());
             locationText.setText(placeSelected);
             if (!placeSelected.equals(place)) {
 
-                getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, new GroceryFragment()).commit();
-                prefConfig.clearList(getApplicationContext());
+                getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, new FoodFragment()).commit();
                 place = placeSelected;
                 showAlert();
             }

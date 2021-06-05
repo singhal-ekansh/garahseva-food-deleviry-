@@ -7,6 +7,25 @@
     android:background="#fff"
     android:paddingBottom="15dp">
 
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/itemImageContainer"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="5dp"
+        android:theme="@style/AppThemeMaterial"
+        android:visibility="gone"
+        app:cardCornerRadius="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/itemImage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"/>
+    </com.google.android.material.card.MaterialCardView>
+
     <TextView
         android:id="@+id/itemName"
         android:layout_width="0dp"
@@ -17,7 +36,7 @@
         android:textColor="#000"
         android:textSize="15sp"
         app:layout_constraintEnd_toStartOf="@+id/elegantNumberButton"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/itemImageContainer"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Item Name" />
 
@@ -37,11 +56,11 @@
         android:layout_width="80dp"
         android:layout_height="27dp"
         android:layout_marginEnd="10dp"
+        android:background="@drawable/white_bg"
+        android:fontFamily="@font/raleway_medium"
         android:gravity="center"
         android:text="ADD"
         android:textColor="#000"
-        android:fontFamily="@font/raleway_medium"
-        android:background="@drawable/white_bg"
         android:textSize="14sp"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
@@ -52,11 +71,11 @@
         android:layout_width="80dp"
         android:layout_height="27dp"
         android:layout_marginEnd="10dp"
-        android:visibility="gone"
-        app:initialNumber="0"
-        app:textSize="6sp"
+        android:visibility="invisible"
         app:backGroundColor="@color/colorPrimaryDark"
+        app:initialNumber="0"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/itemName" />
+        app:layout_constraintTop_toTopOf="@+id/itemName"
+        app:textSize="6sp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

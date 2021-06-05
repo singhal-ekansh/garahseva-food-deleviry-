@@ -15,7 +15,6 @@ import com.app.groceryApp.R;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 public class myOrderAdapter extends RecyclerView.Adapter<myOrderAdapter.ordersViewHolder> {
 
@@ -42,7 +41,7 @@ public class myOrderAdapter extends RecyclerView.Adapter<myOrderAdapter.ordersVi
         Date date = new Date(Long.parseLong(orderDetail.getTimestamp()) * 1000);
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy  - HH:mm");
         holder.placedDate.setText("Placed on : " + simpleDateFormat.format(date));
-        holder.orderAmount.setText("Amount : ₹ " + orderDetail.getTotal_amount());
+        holder.orderAmount.setText("Amount : ₹ " + (Integer.parseInt(orderDetail.getTotal_amount()) + Integer.parseInt(orderDetail.getDel_fee())));
         holder.modeOfPayment.setText("Payment Mode : Cash on delivery");
         holder.orderId.setText("Id : " + orderDetail.getOrder_id().substring(0, 8).toUpperCase());
         holder.restaurantName.setText(orderDetail.getRestaurant_name());

@@ -1,5 +1,11 @@
 package com.app.groceryApp.activities;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.MenuItem;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
@@ -7,29 +13,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.ProgressBar;
-import android.widget.TextView;
-
 import com.app.groceryApp.R;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class myOrders extends AppCompatActivity implements myOrderAdapter.onOrderClickListener {
 
@@ -37,7 +32,7 @@ public class myOrders extends AppCompatActivity implements myOrderAdapter.onOrde
     FirebaseFirestore store;
     TextView noOrder;
     myOrderAdapter Adapter;
-    List<OrderDetailClass> myOrdersList;
+    List<OrderDetailClass> myOrdersList = new ArrayList<>();
     ProgressBar progressBar;
 
 
@@ -71,9 +66,9 @@ public class myOrders extends AppCompatActivity implements myOrderAdapter.onOrde
                         myOrdersList.get(i).setOrder_id(documentSnapshot.getId());
                         i++;
                     }
-                    Adapter = new myOrderAdapter(myOrdersList, myOrders.this);
-                    orderRecycler.setAdapter(Adapter);
                 }
+                Adapter = new myOrderAdapter(myOrdersList, myOrders.this);
+                orderRecycler.setAdapter(Adapter);
             }
         });
     }
@@ -89,7 +84,8 @@ public class myOrders extends AppCompatActivity implements myOrderAdapter.onOrde
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        overridePendingTransition(0, 0);
+        setResult(RESULT_OK);
+
     }
 
     @Override

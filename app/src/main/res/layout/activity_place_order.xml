@@ -171,7 +171,7 @@
                         android:layout_alignParentTop="true"
                         android:layout_marginStart="60dp"
                         android:layout_marginTop="30dp"
-                        android:textSize="11sp"
+                        android:textSize="13sp"
                         tools:text="from : " />
 
 
@@ -231,6 +231,7 @@
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <TextView
+                            android:id="@+id/delFeeView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="35dp"

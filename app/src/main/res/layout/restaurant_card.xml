@@ -3,18 +3,40 @@
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/resCard"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="10dp"
     android:background="#fff"
     android:theme="@style/AppThemeMaterial"
     app:cardCornerRadius="12dp"
-    app:cardElevation="10dp">
+    app:cardElevation="5dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingBottom="10dp">
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/closedTag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:theme="@style/AppThemeMaterial"
+            android:visibility="gone"
+            app:cardCornerRadius="12dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimaryDark"
+                android:elevation="10dp"
+                android:fontFamily="@font/raleway_medium"
+                android:padding="6dp"
+                android:text="Restaurant Closed"
+                android:textColor="#fff" />
+        </com.google.android.material.card.MaterialCardView>
 
         <ImageView
             android:id="@+id/resImage"

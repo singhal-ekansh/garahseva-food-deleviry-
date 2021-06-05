@@ -55,14 +55,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/totalItems"
+                android:layout_alignParentStart="true"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="5dp"
+                android:layout_marginEnd="25dp"
                 android:layout_marginBottom="8dp"
+                android:layout_toStartOf="@+id/plaOrderTxt"
                 android:textColor="#fff"
-                android:textSize="15sp"
+                android:textSize="14sp"
                 tools:text="$ 500" />
 
             <TextView
+                android:id="@+id/plaOrderTxt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"

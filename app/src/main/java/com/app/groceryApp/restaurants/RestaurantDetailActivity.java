@@ -1,12 +1,5 @@
 package com.app.groceryApp.restaurants;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -18,8 +11,14 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.app.groceryApp.activities.PlaceOrderActivity;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.app.groceryApp.R;
+import com.app.groceryApp.activities.PlaceOrderActivity;
 import com.app.groceryApp.utils.prefConfig;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
@@ -98,9 +97,17 @@ public class RestaurantDetailActivity extends AppCompatActivity implements Share
                 FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
 
                 if (firebaseAuth.getCurrentUser() != null) {
+                    if (prefConfig.hasCurrentOrder(getApplicationContext())) {
+                        Toast.makeText(getApplicationContext(),"Can not place multiple orders at once",Toast.LENGTH_LONG).show();
+                       //TODO: remove this
+                        prefConfig.changeHasCurrentOrder(getApplicationContext(),false);
+                        return;
+                    }
                     Intent intent = new Intent(RestaurantDetailActivity.this, PlaceOrderActivity.class);
                     intent.putExtra("restaurant_name", getIntent().getStringExtra("res_name"));
                     intent.putExtra("restaurant_id", getIntent().getStringExtra("_id"));
+                    intent.putExtra("del_fee", getIntent().getStringExtra("del_fee"));
+                    intent.putExtra("free_del", getIntent().getStringExtra("free_del"));
                     startActivityForResult(intent, 1);
                 } else {
                     List<AuthUI.IdpConfig> providers = Arrays.asList(
@@ -156,7 +163,10 @@ public class RestaurantDetailActivity extends AppCompatActivity implements Share
                 amount += (Integer.parseInt(item.getPrice()) * Integer.parseInt(item.getQuantitySelected()));
             }
             totalItems.setText(items + " Items");
-            totalAmount.setText("₹ " + amount);
+            if (amount < Integer.parseInt(getIntent().getStringExtra("free_del")))
+                totalAmount.setText("₹ " + amount + "  (₹" + (Integer.parseInt(getIntent().getStringExtra("free_del")) - amount) + " more for FREE delivery)");
+            else
+                totalAmount.setText("₹ " + amount + "  (FREE delivery)");
         }
     }
 
@@ -186,28 +196,28 @@ public class RestaurantDetailActivity extends AppCompatActivity implements Share
         if (requestCode == 1 && resultCode == RESULT_OK)
             setCategoryAndItems();
 
-        if (resultCode == 10){
+        if (resultCode == 10) {
             setResult(RESULT_OK);
             finish();
         }
-            if (requestCode == 500) {
-                IdpResponse response = IdpResponse.fromResultIntent(data);
+        if (requestCode == 500) {
+            IdpResponse response = IdpResponse.fromResultIntent(data);
 
-                if (resultCode == Activity.RESULT_OK) {
+            if (resultCode == Activity.RESULT_OK) {
 
-                    if (response.isNewUser()) {
-                        FirebaseFirestore fireStore = FirebaseFirestore.getInstance();
-                        DocumentReference reference = fireStore.collection("users").document(FirebaseAuth.getInstance().getCurrentUser().getUid());
-                        Map<String, Object> newUser = new HashMap<>();
-                        newUser.put("has current order", false);
-                        newUser.put("wallet", 0);
-                        reference.set(newUser);
-                    }
-                    FirebaseMessaging.getInstance().subscribeToTopic(FirebaseAuth.getInstance().getCurrentUser().getUid());
-
-                } else {
-                    Toast.makeText(getApplicationContext(), "login not successful", Toast.LENGTH_SHORT).show();
+                if (response.isNewUser()) {
+                    FirebaseFirestore fireStore = FirebaseFirestore.getInstance();
+                    DocumentReference reference = fireStore.collection("users").document(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                    Map<String, Object> newUser = new HashMap<>();
+                    newUser.put("has current order", false);
+                    newUser.put("wallet", 0);
+                    reference.set(newUser);
                 }
+                FirebaseMessaging.getInstance().subscribeToTopic(FirebaseAuth.getInstance().getCurrentUser().getUid());
+
+            } else {
+                Toast.makeText(getApplicationContext(), "login not successful", Toast.LENGTH_SHORT).show();
             }
+        }
     }
 }

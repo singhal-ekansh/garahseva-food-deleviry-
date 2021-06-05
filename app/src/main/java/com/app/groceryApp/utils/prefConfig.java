@@ -3,8 +3,6 @@ package com.app.groceryApp.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.app.groceryApp.groceries.bannerLinks;
-import com.app.groceryApp.groceries.itemHelperClass;
 import com.app.groceryApp.restaurants.RestaurantData;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -20,6 +18,7 @@ public class prefConfig {
     public static final String FCM_KEY = "AAAAyvy_7rs:APA91bG01HJUXNUT7n6pRma-EWtjLt9bMzGc7jg8GEoUmlHYjHw6tu_IhcNzS84ETDlrWFnxDqJV6KLzT-fQygh1AFQJ1lJofBdBjJ44nmzO1sfzsWNXoB83chP-oXKTrW2-nK02B2jF";
     public static final String FCM_TOPIC = "PUSH_NOTIFICATIONS_TO_ADMIN";
 
+    /*
     public static void saveList(Context context, ArrayList<itemHelperClass> list) {
 
         Gson gson = new Gson();
@@ -68,6 +67,8 @@ public class prefConfig {
         return list;
     }
 
+     */
+
     public static void saveAddress(Context context, String name, String phone, String postalCode, String address, String landmark) {
         Map<String, Object> addressMap = new HashMap<>();
         addressMap.put("name", name);
@@ -87,6 +88,7 @@ public class prefConfig {
     }
 
     public static Map<String, Object> getAddressMap(Context context) {
+
         SharedPreferences preferences = context.getSharedPreferences("myDetails", Context.MODE_PRIVATE);
         String jsonString = preferences.getString("myAddress", "");
 
@@ -115,6 +117,7 @@ public class prefConfig {
 
 
     public static void onPlacingOrder(Context context) {
+        /*
 // here empty my cart list in shared preferences
         ArrayList<itemHelperClass> list;
         list = new ArrayList<>();
@@ -127,7 +130,11 @@ public class prefConfig {
         editor.putBoolean("HasCurrentOrderOrNot", true);
         editor.apply();
 
+
+         */
     }
+
+
 
     public static void setDeliverLocation(Context context, String place) {
         SharedPreferences preferences = context.getSharedPreferences("myDetails", Context.MODE_PRIVATE);
@@ -151,23 +158,15 @@ public class prefConfig {
     }
 
     public static boolean hasCurrentOrder(Context context) {
+        if (context == null)
+            return false;
+
         boolean hasOrNot;
         SharedPreferences preferences = context.getSharedPreferences("myDetails", Context.MODE_PRIVATE);
         hasOrNot = preferences.getBoolean("HasCurrentOrderOrNot", false);
         return hasOrNot;
     }
 
-    public static void clearList(Context context) {
-        ArrayList<itemHelperClass> list;
-        list = new ArrayList<>();
-
-        Gson gson = new Gson();
-        String jsonString = gson.toJson(list);
-        SharedPreferences preferences = context.getSharedPreferences("myDetails", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putString("myCartList", jsonString);
-        editor.apply();
-    }
 
     public static void saveFoodOrderList(Context context, List<RestaurantData> list) {
 
@@ -184,6 +183,10 @@ public class prefConfig {
     }
 
     public static List<RestaurantData> getFoodOrderList(Context context) {
+
+        if (context == null)
+            return new ArrayList<>();
+
         SharedPreferences preferences = context.getSharedPreferences("myDetails", Context.MODE_PRIVATE);
         String jsonString = preferences.getString("foodCartList", "");
 

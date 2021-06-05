@@ -24,17 +24,8 @@
             android:name=".activities.myOrders"
             android:theme="@style/AppTheme2" />
         <activity
-            android:name=".activities.checkoutPayment"
-            android:theme="@style/AppTheme2" />
-        <activity
-            android:name=".activities.myAddress"
-            android:theme="@style/AppTheme2" />
-        <activity
             android:name=".activities.myAccount"
             android:theme="@style/AppThemeMaterial" />
-        <activity android:name=".activities.searchBar" />
-        <activity android:name=".groceries.itemList" />
-        <activity android:name=".groceries.subCategory" />
         <activity
             android:name=".activities.MainActivity"
             android:theme="@style/AppTheme">

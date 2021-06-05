@@ -2,29 +2,30 @@ package com.app.groceryApp.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.app.groceryApp.R;
+import com.app.groceryApp.activities.myOrders;
 import com.app.groceryApp.restaurants.RestaurantAdapter;
 import com.app.groceryApp.restaurants.RestaurantData;
 import com.app.groceryApp.restaurants.RestaurantDetailActivity;
 import com.app.groceryApp.utils.prefConfig;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.card.MaterialCardView;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.gson.Gson;
 
@@ -36,7 +37,7 @@ import static android.app.Activity.RESULT_OK;
 public class FoodFragment extends Fragment {
 
     RecyclerView recyclerView;
-    TextView numberOfPlaces, orderResName;
+    TextView numberOfPlaces, orderResName,currentOrder;
     FirebaseFirestore firebaseFirestore;
     String place;
     RestaurantAdapter adapter;
@@ -62,12 +63,16 @@ public class FoodFragment extends Fragment {
         progressBar.setVisibility(View.VISIBLE);
         savedOrderCard = view.findViewById(R.id.orderDetail);
         orderResName = view.findViewById(R.id.savedResName);
-
-        firebaseFirestore.collection("admin").document(place).collection("restaurants").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        currentOrder = view.findViewById(R.id.currentOrder);
+        adapter = new RestaurantAdapter(restaurantDataList, ids, getContext(), this);
+        recyclerView.setAdapter(adapter);
+        firebaseFirestore.collection("admin").document(place).collection("restaurants").orderBy("isClosed").addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    for (DocumentSnapshot snapshot : task.getResult().getDocuments()) {
+            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                restaurantDataList.clear();
+                ids.clear();
+                if (!value.isEmpty()) {
+                    for (DocumentSnapshot snapshot : value.getDocuments()) {
                         if (snapshot.exists()) {
                             ids.add(snapshot.getId());
                             restaurantDataList.add(snapshot.toObject(RestaurantData.class));
@@ -83,27 +88,42 @@ public class FoodFragment extends Fragment {
         savedOrderCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (restaurantDataList.get(i).getIsClosed()) {
+                    Toast.makeText(getContext(), "Restaurant is closed", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 Intent intent = new Intent(getContext(), RestaurantDetailActivity.class);
                 intent.putExtra("_id", ids.get(i));
                 intent.putExtra("res_name", restaurantDataList.get(i).getName());
-                startActivityForResult(intent,1);
+                intent.putExtra("del_fee", restaurantDataList.get(i).getDeliveryFee());
+                intent.putExtra("free_del", restaurantDataList.get(i).getFreeDeliveryPrice());
+                startActivityForResult(intent, 1);
+            }
+        });
+        currentOrder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivityForResult(new Intent(getContext(), myOrders.class),1);
             }
         });
         return view;
     }
 
     private void setRestaurants() {
-        numberOfPlaces.setText(restaurantDataList.size() + " Restaurants Near You");
-        adapter = new RestaurantAdapter(restaurantDataList, ids, getContext(),this);
-        recyclerView.setAdapter(adapter);
+        numberOfPlaces.setText(restaurantDataList.size() + " Restaurants Around You");
+        adapter.notifyDataSetChanged();
         setOrderDetailsCard();
         progressBar.setVisibility(View.GONE);
 
     }
 
     private void setOrderDetailsCard() {
+        if(prefConfig.hasCurrentOrder(getContext())){
+            currentOrder.setVisibility(View.VISIBLE);
+        }else
+            currentOrder.setVisibility(View.GONE);
+
         if (!prefConfig.getCurrentRestaurant(getContext()).equals("")) {
-            savedOrderCard.setVisibility(View.VISIBLE);
             i = 0;
             for (String id : ids) {
                 if (prefConfig.getCurrentRestaurant(getContext()).equals(id)) {
@@ -112,8 +132,14 @@ public class FoodFragment extends Fragment {
                 i++;
             }
             orderResName.setText(restaurantDataList.get(i).getName());
-        } else
+            if (restaurantDataList.get(i).getIsClosed())
+                savedOrderCard.setVisibility(View.GONE);
+            else
+                savedOrderCard.setVisibility(View.VISIBLE);
+        } else {
             savedOrderCard.setVisibility(View.GONE);
+
+        }
     }
 
     @Override

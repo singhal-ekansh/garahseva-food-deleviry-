@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -22,6 +21,7 @@ import com.android.volley.toolbox.Volley;
 import com.app.groceryApp.R;
 import com.app.groceryApp.restaurants.RestaurantData;
 import com.app.groceryApp.restaurants.RestaurantItemsAdapter;
+import com.app.groceryApp.utils.Dialogs;
 import com.app.groceryApp.utils.prefConfig;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -33,7 +33,6 @@ import com.google.gson.Gson;
 
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -43,10 +42,11 @@ public class PlaceOrderActivity extends AppCompatActivity implements SharedPrefe
 
     RecyclerView recyclerView;
     RestaurantItemsAdapter adapter;
-    TextView itemTotalAmount, grandTotalAmount, accName, accNumber, accAddress, accLandmark, accPostal, resName;
-    int AmountTotal;
+    TextView itemTotalAmount, grandTotalAmount, accName, accNumber, accAddress, accLandmark, accPostal, resName, delFeeView;
+    int AmountTotal, delFee;
     MaterialCardView placeBtn;
     FirebaseFirestore firebaseFirestore;
+    Dialogs loadingDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +55,7 @@ public class PlaceOrderActivity extends AppCompatActivity implements SharedPrefe
         recyclerView = findViewById(R.id.orderItemsRecycler);
         itemTotalAmount = findViewById(R.id.itemTotalAmount);
         grandTotalAmount = findViewById(R.id.grandTotalAmount);
+        delFeeView = findViewById(R.id.delFeeView);
         accName = findViewById(R.id.NameInAdd);
         accNumber = findViewById(R.id.NumberInAdd);
         accAddress = findViewById(R.id.AddressInAdd);
@@ -62,6 +63,7 @@ public class PlaceOrderActivity extends AppCompatActivity implements SharedPrefe
         accPostal = findViewById(R.id.PostalInAdd);
         resName = findViewById(R.id.resName);
         placeBtn = findViewById(R.id.placeOrderBtn);
+        loadingDialog = new Dialogs(PlaceOrderActivity.this);
         firebaseFirestore = FirebaseFirestore.getInstance();
         resName.setText("from : " + getIntent().getStringExtra("restaurant_name"));
         ActionBar bar = getSupportActionBar();
@@ -80,10 +82,14 @@ public class PlaceOrderActivity extends AppCompatActivity implements SharedPrefe
         placeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                loadingDialog.showLoading();
+
                 Map<String, Object> newOrder = new HashMap<>();
                 newOrder.put("delivery_address", prefConfig.getAddressJson(getApplicationContext()));
                 newOrder.put("order_detail", new Gson().toJson(prefConfig.getFoodOrderList(getApplicationContext())));
                 newOrder.put("total_amount", String.valueOf(AmountTotal));
+                newOrder.put("del_fee", String.valueOf(delFee));
                 newOrder.put("user_id", FirebaseAuth.getInstance().getCurrentUser().getUid());
                 newOrder.put("timestamp", String.valueOf((new Date().getTime()) / 1000));
                 newOrder.put("status", "pending");
@@ -106,10 +112,12 @@ public class PlaceOrderActivity extends AppCompatActivity implements SharedPrefe
                                         setResult(10);
                                         PrepareNotificationMessage();
                                         finish();
-                                    }
+                                    } else
+                                        loadingDialog.cancelLoading();
                                 }
                             });
-                        }
+                        } else
+                            loadingDialog.cancelLoading();
                     }
                 });
 
@@ -126,7 +134,15 @@ public class PlaceOrderActivity extends AppCompatActivity implements SharedPrefe
             }
         }
         itemTotalAmount.setText("₹ " + AmountTotal);
-        grandTotalAmount.setText("₹ " + AmountTotal);
+        delFee = Integer.parseInt(getIntent().getStringExtra("del_fee"));
+        if (AmountTotal < Integer.parseInt(getIntent().getStringExtra("free_del"))) {
+            grandTotalAmount.setText("₹ " + (AmountTotal + delFee));
+            delFeeView.setText("₹ " + delFee);
+        } else {
+            grandTotalAmount.setText("₹ " + AmountTotal);
+            delFeeView.setText("FREE");
+            delFee = 0;
+        }
     }
 
     private void setAddressInMyAcc() {

@@ -1,10 +1,5 @@
 package com.app.groceryApp.activities;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
@@ -20,6 +15,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.app.groceryApp.BuildConfig;
 import com.app.groceryApp.R;
 import com.app.groceryApp.utils.prefConfig;
 import com.firebase.ui.auth.AuthUI;
@@ -38,7 +39,7 @@ public class myAccount extends AppCompatActivity {
 
     FirebaseUser user;
     FirebaseFirestore fireStore;
-    MaterialCardView logoutBtn, toMyOrderBtn, rateBtn, contactUs, addressToggle;
+    MaterialCardView logoutBtn, toMyOrderBtn, rateBtn, contactUs, addressToggle,shareBtn;
     ImageView editAddress;
     String postalCode, contact;
     LinearLayout addressLayout;
@@ -66,6 +67,7 @@ public class myAccount extends AppCompatActivity {
         myWalletAmt = findViewById(R.id.walletAmt);
         rateBtn = findViewById(R.id.rateAppBtn);
         contactUs = findViewById(R.id.contactUsBtn);
+        shareBtn = findViewById(R.id.shareBtn);
         editAddress = findViewById(R.id.addressEdit);
         addressToggle = findViewById(R.id.viewAddress);
         addressLayout = findViewById(R.id.deliveryAddLayout);
@@ -140,6 +142,17 @@ public class myAccount extends AppCompatActivity {
             }
         });
 
+        shareBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent sendIntent = new Intent();
+                sendIntent.setAction(Intent.ACTION_SEND);
+                sendIntent.putExtra(Intent.EXTRA_TEXT,
+                        "First online food delivery platform in Vikasnagar. Get food delivered at your doorstep : https://play.google.com/store/apps/details?id=" + BuildConfig.APPLICATION_ID);
+                sendIntent.setType("text/plain");
+                startActivity(sendIntent);
+            }
+        });
         rateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

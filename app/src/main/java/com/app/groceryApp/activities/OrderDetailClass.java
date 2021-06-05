@@ -1,7 +1,7 @@
 package com.app.groceryApp.activities;
 
 public class OrderDetailClass {
-    String delivery_address, order_detail, total_amount, user_id, timestamp, status, restaurant_id, order_id,restaurant_name;
+    String delivery_address, order_detail, total_amount, user_id, timestamp, status, restaurant_id, order_id, restaurant_name, del_fee;
 
 
     public String getDelivery_address() {
@@ -74,5 +74,13 @@ public class OrderDetailClass {
 
     public void setRestaurant_name(String restaurant_name) {
         this.restaurant_name = restaurant_name;
+    }
+
+    public String getDel_fee() {
+        return del_fee;
+    }
+
+    public void setDel_fee(String del_fee) {
+        this.del_fee = del_fee;
     }
 }

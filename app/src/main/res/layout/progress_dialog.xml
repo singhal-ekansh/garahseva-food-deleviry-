@@ -5,7 +5,8 @@
     android:layout_height="wrap_content"
     android:layout_margin="5dp"
     android:background="#fff"
-    app:cardCornerRadius="10dp">
+    android:elevation="10dp"
+    app:cardCornerRadius="15dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -24,7 +25,7 @@
             android:layout_alignBottom="@+id/dialogProgressBar"
             android:layout_alignParentTop="true"
             android:layout_marginStart="30dp"
-            android:fontFamily="@font/amethysta"
+            android:fontFamily="@font/raleway_medium"
             android:layout_toEndOf="@id/dialogProgressBar"
             android:gravity="center"
             android:text="Loading...."

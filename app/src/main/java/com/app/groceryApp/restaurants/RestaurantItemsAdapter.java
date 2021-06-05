@@ -5,6 +5,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -13,7 +14,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.app.groceryApp.R;
 import com.app.groceryApp.activities.PlaceOrderActivity;
 import com.app.groceryApp.utils.prefConfig;
+import com.bumptech.glide.Glide;
 import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
+import com.google.android.material.card.MaterialCardView;
 
 import java.util.List;
 
@@ -42,6 +45,11 @@ public class RestaurantItemsAdapter extends RecyclerView.Adapter<RestaurantItems
         holder.name.setText(data.getName());
         holder.price.setText("₹ " + data.getPrice());
 
+        if (data.getImage() != null && !data.getImage().equals("")) {
+            Glide.with(context).load(data.getImage()).into(holder.itemImage);
+            holder.itemImageContainer.setVisibility(View.VISIBLE);
+        } else
+            holder.itemImageContainer.setVisibility(View.GONE);
 
         if (bypass || prefConfig.getCurrentRestaurant(context).equals(((RestaurantDetailActivity) context)._id)) {
             List<RestaurantData> list = prefConfig.getFoodOrderList(context);
@@ -95,7 +103,7 @@ public class RestaurantItemsAdapter extends RecyclerView.Adapter<RestaurantItems
                 if (newValue == 0) {
                     list.remove(i);
                     holder.addBtn.setVisibility(View.VISIBLE);
-                    holder.elegantNumberButton.setVisibility(View.GONE);
+                    holder.elegantNumberButton.setVisibility(View.INVISIBLE);
 
                 } else {
                     list.get(i).setQuantitySelected(String.valueOf(newValue));
@@ -125,12 +133,16 @@ public class RestaurantItemsAdapter extends RecyclerView.Adapter<RestaurantItems
 
         TextView name, price, addBtn;
         ElegantNumberButton elegantNumberButton;
+        ImageView itemImage;
+        MaterialCardView itemImageContainer;
 
         public RestaurantItemsViewHolder(@NonNull View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.itemName);
             price = itemView.findViewById(R.id.itemPrice);
             addBtn = itemView.findViewById(R.id.addBtn);
+            itemImage = itemView.findViewById(R.id.itemImage);
+            itemImageContainer = itemView.findViewById(R.id.itemImageContainer);
             elegantNumberButton = itemView.findViewById(R.id.elegantNumberButton);
 
         }

@@ -9,10 +9,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.app.groceryApp.R;
-import com.app.groceryApp.groceries.itemHelperClass;
 import com.app.groceryApp.restaurants.RestaurantData;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class orderItemAdapter extends RecyclerView.Adapter<orderItemAdapter.orderItemViewHolder> {

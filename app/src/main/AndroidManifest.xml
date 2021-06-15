@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.app.groceryApp">
+    package="com.app.garahseva">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
@@ -12,8 +12,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.PlaceOrderActivity"
-            android:theme="@style/AppTheme2"/>
+        <activity android:name=".utils.SplashScreen">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".activities.PlaceOrderActivity"
+            android:theme="@style/AppTheme2" />
         <activity
             android:name=".restaurants.RestaurantDetailActivity"
             android:theme="@style/AppTheme2" />
@@ -28,13 +36,7 @@
             android:theme="@style/AppThemeMaterial" />
         <activity
             android:name=".activities.MainActivity"
-            android:theme="@style/AppTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:theme="@style/AppTheme" />
 
         <service android:name=".utils.MyFirebaseMessagingService">
             <intent-filter>

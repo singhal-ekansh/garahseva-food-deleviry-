@@ -43,7 +43,7 @@
             android:layout_width="match_parent"
             android:layout_height="150dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/ic_baseline_shopping_cart_24"
+            android:src="@drawable/placeholder"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView

@@ -4,24 +4,34 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#dedede"
-    tools:context="com.app.groceryApp.activities.myOrders">
+    tools:context="com.app.garahseva.activities.myOrders">
 
-
-    <TextView
-        android:id="@+id/noOrderTxt"
+    <LinearLayout
+        android:id="@+id/noOrderView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="NO ORDERS PLACED!"
-        android:fontFamily="sans-serif"
-        android:textColor="#000"
-        android:textSize="25sp"
+        android:orientation="vertical"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
 
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_baseline_no_meals_24" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/raleway_medium"
+            android:text="NO ORDERS PLACED"
+            android:textColor="#000"
+            android:textSize="25sp" />
+    </LinearLayout>
 
     <ProgressBar
         android:id="@+id/orderProgressBar"

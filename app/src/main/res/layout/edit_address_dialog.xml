@@ -2,94 +2,134 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="5dp"
-    android:orientation="vertical"
+    android:layout_margin="30dp"
     android:background="@drawable/white_bg"
+    android:orientation="vertical"
     android:padding="10dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="3dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="*Name : "
+            android:textSize="15sp" />
+
+        <EditText
+            android:id="@+id/dialog_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/raleway_medium"
+            android:inputType="textPersonName"
+            android:textSize="15sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="3dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="*Contact : "
+            android:textSize="15sp" />
+
+        <EditText
+            android:id="@+id/dialog_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif"
+            android:inputType="number"
+            android:textSize="15sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="3dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="*Address : "
+            android:textSize="15sp" />
+
+        <EditText
+            android:id="@+id/dialog_address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/raleway_medium"
+            android:inputType="textMultiLine"
+            android:textSize="15sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="3dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Landmark : "
+            android:textSize="15sp" />
+
+        <EditText
+            android:id="@+id/dialog_landmark"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/raleway_medium"
+            android:inputType="text"
+            android:textSize="15sp" />
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
+        android:layout_marginStart="5dp"
         android:orientation="horizontal">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Postal code:"
             android:fontFamily="@font/raleway_medium"
-            android:textSize="16sp" />
+            android:text="Postal code : "
+            android:textSize="15sp" />
 
         <TextView
             android:id="@+id/dialog_postal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
             android:padding="5dp"
-            android:fontFamily="@font/roboto_black"
             android:text="248198"
             android:textColor="#000"
-            android:textSize="16sp" />
+            android:textSize="15sp" />
 
 
     </LinearLayout>
-
-
-    <EditText
-        android:id="@+id/dialog_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="3dp"
-        android:hint="Name*"
-        android:fontFamily="@font/raleway_medium"
-        android:inputType="textPersonName" />
-
-    <EditText
-        android:id="@+id/dialog_number"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="3dp"
-        android:fontFamily="@font/raleway_medium"
-        android:hint="contact number*"
-        android:inputType="number" />
-
-
-    <EditText
-        android:id="@+id/dialog_address"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="3dp"
-        android:hint="address*"
-        android:fontFamily="@font/raleway_medium"
-        android:inputType="textMultiLine" />
-
-    <EditText
-        android:id="@+id/dialog_landmark"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="3dp"
-        android:hint="landmark*"
-        android:fontFamily="@font/raleway_medium"
-        android:inputType="text" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="4dp"
-        android:padding="2dp"
         android:fontFamily="@font/raleway_medium"
-        android:text="*postal code can be changed from home screen only" />
+        android:padding="2dp"
+        android:text="*postal code can be changed from home screen only"
+        android:textSize="12dp" />
 
     <Button
         android:id="@+id/dialog_editAddBtn"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
+        android:layout_height="40dp"
         android:layout_margin="8dp"
-        android:textColor="#fff"
         android:background="@drawable/round_btn"
+        android:gravity="center"
         android:text="Save Address"
-        android:textSize="20sp" />
-
+        android:textColor="#fff"
+        android:textSize="15dp" />
 
 </LinearLayout>

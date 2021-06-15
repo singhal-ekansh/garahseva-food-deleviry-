@@ -1,19 +1,17 @@
 {
-  "version": 1,
+  "version": 2,
   "artifactType": {
     "type": "APK",
     "kind": "Directory"
   },
-  "applicationId": "com.app.groceryapp",
+  "applicationId": "com.app.garahseva",
   "variantName": "release",
   "elements": [
     {
       "type": "SINGLE",
       "filters": [],
-      "properties": [],
-      "versionCode": 1,
-      "versionName": "1.0",
-      "enabled": true,
+      "versionCode": 2,
+      "versionName": "1.1",
       "outputFile": "app-release.apk"
     }
   ]

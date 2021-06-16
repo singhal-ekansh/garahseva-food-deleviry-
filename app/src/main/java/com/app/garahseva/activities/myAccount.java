@@ -207,10 +207,12 @@ public class myAccount extends AppCompatActivity {
         postalView = view.findViewById(R.id.dialog_postal);
 
         Map<String, Object> addressMap = prefConfig.getAddressMap(getApplicationContext());
-        dName.setText(addressMap.get("name").toString());
-        dNumber.setText(addressMap.get("contact").toString());
-        dAddress.setText(addressMap.get("delivery address").toString());
-        dLandmark.setText(addressMap.get("landmark").toString());
+        if (addressMap != null) {
+            dName.setText(addressMap.get("name").toString());
+            dNumber.setText(addressMap.get("contact").toString());
+            dAddress.setText(addressMap.get("delivery address").toString());
+            dLandmark.setText(addressMap.get("landmark").toString());
+        }
         postalView.setText(postalCode);
 
 

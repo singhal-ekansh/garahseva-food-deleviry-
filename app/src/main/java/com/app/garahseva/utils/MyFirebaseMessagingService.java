@@ -44,7 +44,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
 
             NotificationCompat.Builder builder = new NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
-                    .setSmallIcon(R.drawable.ic_launcher_foreground)
+                    .setSmallIcon(R.drawable.ic_launcher_foreground).setColor(getColor(R.color.colorPrimary))
                     .setContentTitle(notificationTitle)
                     .setContentText(notificationMessage)
                     .setPriority(NotificationCompat.PRIORITY_DEFAULT)

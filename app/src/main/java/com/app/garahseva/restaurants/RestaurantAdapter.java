@@ -73,6 +73,7 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
                 intent.putExtra("_id", ids.get(position));
                 intent.putExtra("res_name", restaurantData.getName());
                 intent.putExtra("del_fee", restaurantData.getDeliveryFee());
+                intent.putExtra("min_del", restaurantData.getMinimumDel());
                 intent.putExtra("free_del", restaurantData.getFreeDeliveryPrice());
                 foodFragment.startActivityForResult(intent, 1);
             }

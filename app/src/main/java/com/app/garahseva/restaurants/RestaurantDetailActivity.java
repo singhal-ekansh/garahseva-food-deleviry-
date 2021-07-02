@@ -56,7 +56,7 @@ public class RestaurantDetailActivity extends AppCompatActivity implements Share
         setContentView(R.layout.activity_restaurant_detail);
 
         recyclerView = findViewById(R.id.itemCategoryRecycler);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(),RecyclerView.VERTICAL,false));
         recyclerView.setHasFixedSize(true);
         firebaseFirestore = FirebaseFirestore.getInstance();
         _id = getIntent().getStringExtra("_id");
@@ -98,7 +98,11 @@ public class RestaurantDetailActivity extends AppCompatActivity implements Share
 
                 if (firebaseAuth.getCurrentUser() != null) {
                     if (prefConfig.hasCurrentOrder(getApplicationContext())) {
-                        Toast.makeText(getApplicationContext(),"Can not place multiple orders at once",Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Can not place multiple orders at once", Toast.LENGTH_LONG).show();
+                        return;
+                    }
+                    if (amount < Integer.parseInt(getIntent().getStringExtra("min_del"))) {
+                        Toast.makeText(getApplicationContext(), "Deliver above ₹ " + Integer.parseInt(getIntent().getStringExtra("min_del")), Toast.LENGTH_LONG).show();
                         return;
                     }
                     Intent intent = new Intent(RestaurantDetailActivity.this, PlaceOrderActivity.class);

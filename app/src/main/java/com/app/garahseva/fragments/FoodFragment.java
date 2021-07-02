@@ -54,7 +54,7 @@ public class FoodFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_food, container, false);
 
         recyclerView = view.findViewById(R.id.restaurantsRecycler);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(),RecyclerView.VERTICAL,false));
         recyclerView.setHasFixedSize(true);
         progressBar = view.findViewById(R.id.progress_bar);
         numberOfPlaces = view.findViewById(R.id.numberOfPlaces);
@@ -98,6 +98,7 @@ public class FoodFragment extends Fragment {
                 intent.putExtra("_id", ids.get(i));
                 intent.putExtra("res_name", restaurantDataList.get(i).getName());
                 intent.putExtra("del_fee", restaurantDataList.get(i).getDeliveryFee());
+                intent.putExtra("min_del", restaurantDataList.get(i).getMinimumDel());
                 intent.putExtra("free_del", restaurantDataList.get(i).getFreeDeliveryPrice());
                 startActivityForResult(intent, 1);
             }

@@ -34,7 +34,7 @@
                 android:elevation="10dp"
                 android:fontFamily="@font/raleway_medium"
                 android:padding="6dp"
-                android:text="Restaurant Closed"
+                android:text="Delivery Closed"
                 android:textColor="#fff" />
         </com.google.android.material.card.MaterialCardView>
 
@@ -55,6 +55,7 @@
             android:elevation="5dp"
             android:textColor="#000"
             android:textSize="16sp"
+            android:fontFamily="@font/roboto_medium"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/resImage"
             tools:text="Restaurant Name" />

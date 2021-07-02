@@ -1,7 +1,7 @@
 package com.app.garahseva.restaurants;
 
 public class RestaurantData {
-    String name, cusine, image, price, category,quantitySelected,deliveryFee,freeDeliveryPrice;
+    String name, cusine, image, price, category,quantitySelected,deliveryFee,freeDeliveryPrice,minimumDel;
     boolean isClosed;
 
     public RestaurantData() {
@@ -71,6 +71,14 @@ public class RestaurantData {
 
     public String getDeliveryFee() {
         return deliveryFee;
+    }
+
+    public String getMinimumDel() {
+        return minimumDel;
+    }
+
+    public void setMinimumDel(String minimumDel) {
+        this.minimumDel = minimumDel;
     }
 
     public void setDeliveryFee(String deliveryFee) {

@@ -13,7 +13,7 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="15dp"
         android:text="Category"
-        android:fontFamily="@font/amethysta"
+        android:fontFamily="@font/roboto_medium"
         android:textColor="#000"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -24,7 +24,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="10dp"
-        android:src="@drawable/ic_baseline_keyboard_arrow_down_24"
+        android:src="@drawable/ic_baseline_keyboard_arrow_right_24"
         app:layout_constraintBottom_toBottomOf="@+id/resCatName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/resCatName"
@@ -35,7 +35,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:visibility="visible"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
         app:layout_constraintTop_toBottomOf="@+id/resCatName" />
 
     <View
